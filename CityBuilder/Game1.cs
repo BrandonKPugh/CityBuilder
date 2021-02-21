@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace CityBuilder
 {
@@ -8,6 +10,11 @@ namespace CityBuilder
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private SpriteSheet _spriteSheet;
+
+        
+        Object testObj;
+        Grid testGrid;
 
         public Game1()
         {
@@ -18,7 +25,18 @@ namespace CityBuilder
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            SpriteMapper mapper = new SpriteMapper();
+            _spriteSheet = mapper.ReadFile(Config.SHEET_CONFIG_FILE_NAME, Content);
+
+            _graphics.PreferredBackBufferWidth = Config.VIEWPORT_WIDTH;
+            _graphics.PreferredBackBufferHeight = Config.VIEWPORT_HEIGHT;
+            _graphics.ApplyChanges();
+
+            RectangleBody collision = new RectangleBody(new Vector2(100, 100), new Vector2(200, 200));
+            testObj = new Object(this, collision);
+
+            Config.GRID_INFO gridInfo = new Config.GRID_INFO(50, 25, 0f, 0f, 1.0f, 1.0f);
+            testGrid = new Grid(gridInfo);
 
             base.Initialize();
         }
@@ -27,7 +45,11 @@ namespace CityBuilder
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _spriteSheet.LoadContent(Content);
+
+            testObj.LoadContent(_spriteSheet.GetSprite("structure-1x1"));
+
+            testGrid.LoadContent(_spriteSheet.GetSprite("tile"));
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +57,9 @@ namespace CityBuilder
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+
+            testObj.Update(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -44,7 +68,13 @@ namespace CityBuilder
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            testGrid.Draw(_spriteBatch);
+
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
+
+            testObj.Draw(_spriteBatch);
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
