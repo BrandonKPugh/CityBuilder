@@ -35,8 +35,10 @@ namespace CityBuilder
             RectangleBody collision = new RectangleBody(new Vector2(100, 100), new Vector2(200, 200));
             testObj = new Object(this, collision);
 
-            Config.GRID_INFO gridInfo = new Config.GRID_INFO(50, 25, 0f, 0f, 1.0f, 1.0f);
-            testGrid = new Grid(gridInfo);
+            //Config.GRID_INFO gridInfo = new Config.GRID_INFO(50, 25, 0f, 0f, 1.0f, 1.0f);
+            //testGrid = new Grid(gridInfo);
+
+            testGrid = new Grid(Config.BUILD_GRID);
 
             base.Initialize();
         }
