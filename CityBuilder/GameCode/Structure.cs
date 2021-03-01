@@ -7,12 +7,23 @@ namespace CityBuilder
 {
     public class Structure : Object
     {
-        public int StructureTileWidth;
-        public int StructureTileHeight;
+        public StructureData Data;
 
-        public Structure(Game1 game, CollisionBody collision) : base(game, collision)
+        public struct StructureData
         {
-            
+            public StructureData(int width, int height)
+            {
+                this.width = width;
+                this.height = height;
+            }
+            public int width;
+            public int height;
+        }
+
+
+        public Structure(Game1 game, CollisionBody collision, StructureData data) : base(game, collision)
+        {
+            this.Data = data;
         }
 
         public void RotateRight()

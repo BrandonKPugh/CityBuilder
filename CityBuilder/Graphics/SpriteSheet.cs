@@ -18,7 +18,6 @@ namespace CityBuilder
         public int Gutter;
         public int Columns;
         public int Rows;
-
         public Dictionary<string, Sprite> Sprites;
 
         public SpriteSheet(string sheetFileName, int pixelWidth, int pixelHeight, int offset, int gutter)
@@ -47,8 +46,11 @@ namespace CityBuilder
             sheetTexture = content.Load<Texture2D>(sheetFileName);
             this.Columns = (sheetTexture.Width - Offset) / (ImagePixelWidth + Gutter);
             this.Rows = (sheetTexture.Height - Offset) / (ImagePixelHeight + Gutter);
+        }
 
-            foreach(Sprite s in Sprites.Values)
+        public void LoadSpriteContent(ContentManager content)
+        {
+            foreach (Sprite s in Sprites.Values)
             {
                 s.LoadContent();
             }

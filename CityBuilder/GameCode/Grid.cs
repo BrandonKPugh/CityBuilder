@@ -109,5 +109,17 @@ namespace CityBuilder
                 return false;
             }
         }
+
+        public Rectangle TileToPixelRect(int tileX, int tileY)
+        {
+            if(tileX >= 0 && tileX < Info.TilesWide && tileY >= 0 && tileY < Info.TilesHigh)
+            {
+                return Info.TileBounds(tileX, tileY);
+            }
+            else
+            {
+                throw new Exception("Tile is not on grid");
+            }
+        }
     }
 }

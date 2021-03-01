@@ -17,6 +17,7 @@ namespace CityBuilder
             Normal,
             Horizontal,
             Vertical,
+            Rectangle,
             NextFrame,
             HorizontalFrames,
             VerticalFrames,
@@ -55,6 +56,7 @@ namespace CityBuilder
 
                     //Texture2D sheetTexture = content.Load<Texture2D>(sheetFileName);
                     sheetToReturn = new SpriteSheet(sheetFileName, pixelWidth, pixelHeight, offset, gutter);
+                    sheetToReturn.LoadContent(content);
 
                     lineNum++;
                 }
@@ -76,6 +78,7 @@ namespace CityBuilder
                         CreateSprite(sheetToReturn, line, lineNum);
                     }
                 }
+                sheetToReturn.LoadSpriteContent(content);
             }
 
             return sheetToReturn;
@@ -98,6 +101,7 @@ namespace CityBuilder
             List<List<int>> frames = ProcessCommand(numbers, connections, sheet.Columns);
 
             Sprite sprite = new Sprite(sheet, sheet.ImagePixelWidth * x, sheet.ImagePixelHeight * y, x, y, frames, flip);
+
             sheet.AddSprite(name, sprite);
         }
 
@@ -281,7 +285,7 @@ namespace CityBuilder
 
         private bool IsConnectionChar(char c)
         {
-            return (c == ',' || c == '|' || c == '-' || c == ';');
+            return (c == ',' || c == '|' || c == '-' || c == ';' || c == '\\');
         }
 
         private ConnectionType GetConnectionType(string s)
@@ -298,6 +302,8 @@ namespace CityBuilder
                 return ConnectionType.Horizontal;
             if (s == "|")
                 return ConnectionType.Vertical;
+            if (s == "\\")
+                return ConnectionType.Rectangle;
             else
                 return ConnectionType.Error;
         }
@@ -433,9 +439,34 @@ namespace CityBuilder
                     }
                     return first;
                 }
+                else if (connections[i] == ConnectionType.Rectangle)
+                {
+                    List<int> aNums = numbers.GetRange(0, i + 1);
+                    List<ConnectionType> aConns = connections.GetRange(0, i);
+                    List<int> bNums = numbers.GetRange(i + 1, numbers.Count - (i + 1));
+                    List<ConnectionType> bConns = connections.GetRange(i + 1, connections.Count - (i + 1));
+
+                    List<List<int>> first = ProcessCommand(aNums, aConns, columns);
+                    List<List<int>> second = ProcessCommand(bNums, bConns, columns);
+
+                    List<int> lastInFirst = first[first.Count - 1];
+                    List<int> firstInSecond = second[0];
+                    if (lastInFirst.Count != 1 || firstInSecond.Count != 1)
+                    {
+                        throw new FormatException("Error");
+                    }
+                    int a = lastInFirst[0];
+                    int b = firstInSecond[0];
+                    first[first.Count - 1] = Rectangle(a, b, columns);
+                    for (int j = 1; j < second.Count; j++)
+                    {
+                        first.Add(second[j]);
+                    }
+                    return first;
+                }
             }
 
-            throw new FormatException("Error");
+            throw new FormatException("Error parsing Sprite Mapper File");
         }
 
         public List<int> Horizontal(int a, int b)
@@ -457,6 +488,31 @@ namespace CityBuilder
             for (int i = a; i <= b; i += columns)
             {
                 list.Add(i);
+            }
+
+            return list;
+        }
+
+        public List<int> Rectangle(int a, int b, int columns)
+        {
+            int columnOfA = a % columns;
+            int columnOfB = b % columns;
+            int rowOfA = a / columns;
+            int rowOfB = b / columns;
+            if(columnOfB < columnOfA || rowOfB < rowOfA)
+            {
+                throw new Exception("Error processing Sprite in Sprite Mapper");
+            }
+            int spriteWidth = columnOfA - columnOfB;
+            int spriteHeight = rowOfA - rowOfB;
+            List<int> list = new List<int>();
+
+            for (int y = 0; y < spriteHeight; y++)
+            {
+                for (int x = a + y * columns; x < (a + y * columns) + spriteWidth; x++)
+                {
+                    list.Add(x);
+                }
             }
 
             return list;

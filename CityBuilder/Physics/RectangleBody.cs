@@ -20,6 +20,15 @@ namespace CityBuilder
             bodies.Add(id, this);
         }
 
+        public RectangleBody(Rectangle rect)
+        {
+            this.Position = new Vector2(rect.X,  rect.Y);
+            Shape = ShapeType.Rectangle;
+            this.Size = new Vector2(rect.Width, rect.Height);
+            id = NextId();
+            bodies.Add(id, this);
+        }
+
         public override Rectangle Region()
         {
             return new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y);

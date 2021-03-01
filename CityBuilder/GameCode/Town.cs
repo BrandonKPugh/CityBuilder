@@ -8,7 +8,10 @@ namespace CityBuilder
 {
     public class Town
     {
+        private SpriteSheet _spriteSheet;
         private List<Structure> _structures;
+
+        private bool _contentLoaded = false;
 
         public Town()
         {
@@ -23,6 +26,16 @@ namespace CityBuilder
             }
         }
 
+        public void LoadContent(SpriteSheet spriteSheet)
+        {
+            _spriteSheet = spriteSheet;
+            foreach(Structure structure in _structures)
+            {
+                LoadStructureContent(structure);
+            }
+            _contentLoaded = true;
+        }
+
         public void Update(GameTime gameTime)
         {
             foreach (Structure structure in _structures)
@@ -34,6 +47,15 @@ namespace CityBuilder
         public void AddStructure(Structure structure)
         {
             _structures.Add(structure);
+            if(_contentLoaded)
+            {
+                LoadStructureContent(structure);
+            }
+        }
+
+        public void LoadStructureContent(Structure structure)
+        {
+            structure.LoadContent(_spriteSheet.GetSprite("structure-" + structure.Data.width + 'x' + structure.Data.height));
         }
     }
 }
