@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CityBuilder.GameCode
+namespace CityBuilder
 {
     public class Town
     {
@@ -12,7 +12,7 @@ namespace CityBuilder.GameCode
 
         public Town()
         {
-
+            _structures = new List<Structure>();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -29,6 +29,11 @@ namespace CityBuilder.GameCode
             {
                 structure.Update(gameTime);
             }
+        }
+
+        public void AddStructure(Structure structure)
+        {
+            _structures.Add(structure);
         }
     }
 }
