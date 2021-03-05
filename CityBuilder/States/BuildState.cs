@@ -28,7 +28,7 @@ namespace CityBuilder
             Rectangle rect = buildGrid.TileToPixelRect(2, 4);
             RectangleBody testCollision = new RectangleBody(rect);
             //RectangleBody testCollision = new RectangleBody(new Vector2(2, 2), new Vector2(20, 20));
-            Structure.StructureData structureData = new Structure.StructureData(1, 1);
+            Structure.StructureData structureData = new Structure.StructureData(1, 3);
             Structure testStructure = new Structure(Game, testCollision, structureData);
             town.AddStructure(testStructure);
 
@@ -58,7 +58,7 @@ namespace CityBuilder
         {
             GraphicsDevice.Clear(Color.DarkOliveGreen);
 
-            Data.Grid.Draw(_spriteBatch);
+            //Data.Grid.Draw(_spriteBatch);
 
             _spriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
             Data.Town.Draw(_spriteBatch);

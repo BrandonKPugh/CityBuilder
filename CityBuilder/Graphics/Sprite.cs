@@ -99,6 +99,10 @@ namespace CityBuilder
 
         public void LoadContent()
         {
+
+            // Need to determine if sourceRect is connected, only split up if NOT connected.
+
+
             sourceRects = new List<List<Rectangle>>();
             int eachImageX = (PixelWidth / columns);
             int eachImageY = (PixelHeight / rows);
