@@ -25,12 +25,26 @@ namespace CityBuilder
 
             Town town = new Town();
 
-            Rectangle rect = buildGrid.TileToPixelRect(2, 4);
-            RectangleBody testCollision = new RectangleBody(rect);
-            //RectangleBody testCollision = new RectangleBody(new Vector2(2, 2), new Vector2(20, 20));
-            Structure.StructureData structureData = new Structure.StructureData(1, 3);
-            Structure testStructure = new Structure(Game, testCollision, structureData);
+            /*
+            Structure.StructureData structureData = new Structure.StructureData(2, 4, 2, 2);
+            Structure testStructure = new Structure(Game, buildGrid, structureData);
             town.AddStructure(testStructure);
+
+            Structure.StructureData structureData2 = new Structure.StructureData(3, 1, 4, 2);
+            Structure testStructure2 = new Structure(Game, buildGrid, structureData2);
+            town.AddStructure(testStructure2);
+
+            Structure.StructureData structureData3 = new Structure.StructureData(2, 2, 4, 3);
+            Structure testStructure3 = new Structure(Game, buildGrid, structureData3);
+            town.AddStructure(testStructure3);
+            */
+            Random rand = new Random();
+            for(int i = 0; i < 5; i++)
+            {
+                Structure.StructureData structureData = new Structure.StructureData(rand.Next(1, 4), rand.Next(1, 4), rand.Next(0, Config.BUILD_GRID.TilesWide), rand.Next(0, Config.BUILD_GRID.TilesHigh));
+                Structure testStructure = new Structure(Game, buildGrid, structureData);
+                town.AddStructure(testStructure);
+            }
 
             this.Data = new GameData();
             Data.Initialize(town, buildGrid);
@@ -58,7 +72,7 @@ namespace CityBuilder
         {
             GraphicsDevice.Clear(Color.DarkOliveGreen);
 
-            //Data.Grid.Draw(_spriteBatch);
+            Data.Grid.Draw(_spriteBatch);
 
             _spriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
             Data.Town.Draw(_spriteBatch);

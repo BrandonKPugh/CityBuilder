@@ -40,8 +40,13 @@ namespace CityBuilder
             public Rectangle Rect { get { return new Rectangle(X, Y, Width, Height); } }
         }
 
+        public struct TOWN_INFO
+        {
+
+        }
+
         // GRID_INFO(tilesWide, tilesHigh, x, y, width, height);
-        public static GRID_INFO BUILD_GRID = new GRID_INFO(10, 10, 0.05625f, .1f, .45f, .8f);
+        public static GRID_INFO BUILD_GRID = new GRID_INFO(24, 12, 0.1f, .1f, 0.8f, .8f);
 
         public static Color GRID_COLOR = new Color(30, 30, 30);
     }

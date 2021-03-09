@@ -17,6 +17,7 @@ namespace CityBuilder
         public Vector2 Acceleration;
         public Sprite Sprite;
 
+        public Object() { }
         public Object(Game1 game, CollisionBody collision)
         {
             Game = game;

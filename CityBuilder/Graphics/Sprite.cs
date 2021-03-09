@@ -100,8 +100,12 @@ namespace CityBuilder
         public void LoadContent()
         {
 
-            // Need to determine if sourceRect is connected, only split up if NOT connected.
-
+            // Currently Sprite.Draw() renders multiple textures at a time for larger sprites. 
+            // This could be an issue in large-sprite or high-object-count games.
+            // Resolve here be checking to see if a sprite is split into too many textures.
+            // Basically each 'tile' within the spritesheet is broken up into a separate texture, and these textures are stored within sourceRects.
+            // By making the 'source' rectangles larger (combining nearby rectangles) within this List, 
+            // the sprite would only need to call SpriteBatch.Draw() once per object, rather than multiple draws.
 
             sourceRects = new List<List<Rectangle>>();
             int eachImageX = (PixelWidth / columns);
@@ -118,6 +122,24 @@ namespace CityBuilder
                     sourceRects[i].Add(new Rectangle(spriteSheet.Offset + x * (eachImageX + spriteSheet.Gutter), spriteSheet.Offset + y * (eachImageY + spriteSheet.Gutter), eachImageX, eachImageY));
                 }
             }
+
+            /*
+            sourceRects = new List<List<Rectangle>>();
+            int eachImageX = (PixelWidth / columns);
+            int eachImageY = (PixelHeight / rows);
+            for (int i = 0; i < sheetIndex.Count; i++)
+            {
+                sourceRects.Add(new List<Rectangle>());
+                List<int> list = sheetIndex[i];
+                for (int j = 0; j < list.Count; j++)
+                {
+                    int pos = list[j];
+                    int x = pos % spriteSheet.Columns;
+                    int y = pos / spriteSheet.Columns;
+                    sourceRects[i].Add(new Rectangle(spriteSheet.Offset + x * (eachImageX + spriteSheet.Gutter), spriteSheet.Offset + y * (eachImageY + spriteSheet.Gutter), eachImageX, eachImageY));
+                }
+            }
+            */
         }
 
         public int Frames
