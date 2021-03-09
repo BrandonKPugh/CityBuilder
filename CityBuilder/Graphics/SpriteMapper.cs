@@ -408,7 +408,7 @@ namespace CityBuilder
                     int a = lastInFirst[0];
                     int b = firstInSecond[0];
                     first[first.Count - 1] = Horizontal(a, b);
-                    for(int j = 1; j < second.Count; j++)
+                    for (int j = 1; j < second.Count; j++)
                     {
                         first.Add(second[j]);
                     }
@@ -457,6 +457,7 @@ namespace CityBuilder
                     }
                     int a = lastInFirst[0];
                     int b = firstInSecond[0];
+
                     first[first.Count - 1] = Rectangle(a, b, columns);
                     for (int j = 1; j < second.Count; j++)
                     {
@@ -501,12 +502,25 @@ namespace CityBuilder
             int rowOfB = b / columns;
             if(columnOfB < columnOfA || rowOfB < rowOfA)
             {
-                throw new Exception("Error processing Sprite in Sprite Mapper");
+                throw new Exception("Error processing Sprite in Sprite Mapper. First item in rectangle selection must be above and to the left of the second item.");
             }
-            int spriteWidth = columnOfA - columnOfB;
-            int spriteHeight = rowOfA - rowOfB;
+            int spriteWidth = columnOfB - columnOfA + 1;
+            if (spriteWidth < 0)
+                spriteWidth *= -1;
+            int spriteHeight = rowOfB - rowOfA + 1;
+            if (spriteHeight < 0)
+                spriteHeight *= -1;
             List<int> list = new List<int>();
 
+            for(int currentRow = rowOfA; currentRow < rowOfA + spriteHeight; currentRow++)
+            {
+                for(int currentColumn = columnOfA; currentColumn < columnOfA + spriteWidth; currentColumn++)
+                {
+                    list.Add(currentRow * columns + currentColumn);
+                }
+            }
+
+            /*
             for (int y = 0; y < spriteHeight; y++)
             {
                 for (int x = a + y * columns; x < (a + y * columns) + spriteWidth; x++)
@@ -514,6 +528,7 @@ namespace CityBuilder
                     list.Add(x);
                 }
             }
+            */
 
             return list;
         }

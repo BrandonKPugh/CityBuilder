@@ -16,18 +16,17 @@ namespace CityBuilder
         public int PixelHeight;
         private int columns;
         private int rows;
-        private List<int> sheetIndex;
+        private List<List<int>> sheetIndex;
         private SpriteSheet spriteSheet;
         private SpriteEffects flip;
         public Color TextureColor = Color.White;
-        //private List<List<Rectangle>> sourceRects;
-        private List<Rectangle> sourceRects;
+        private List<List<Rectangle>> sourceRects;
         //public TimeSpan timer;
         //public float AnimationSpeed;
         //public int Frame = 0;
         public float Depth = 0.5f;
 
-        public Sprite(SpriteSheet sheet, int pixelWidth, int pixelHeight, int imagesX, int imagesY, List<int> frames, SpriteEffects toFlip = SpriteEffects.None)
+        public Sprite(SpriteSheet sheet, int pixelWidth, int pixelHeight, int imagesX, int imagesY, List<List<int>> frames, SpriteEffects toFlip = SpriteEffects.None)
         {
             spriteSheet = sheet;
             PixelWidth = pixelWidth;
@@ -42,11 +41,8 @@ namespace CityBuilder
 
         public void Draw(SpriteBatch spriteBatch, Rectangle rect)
         {
-            Rectangle source = sourceRects[0];
+            List<Rectangle> sources = sourceRects[0];
 
-            spriteBatch.Draw(spriteSheet.sheetTexture, rect, source, TextureColor, 0f, new Vector2(0), flip, Depth);
-
-            /*
             for (int y = 0; y < rows; y++)
             {
                 for (int x = 0; x < columns; x++)
@@ -57,19 +53,10 @@ namespace CityBuilder
                     spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, 0f, new Vector2(0), flip, Depth);
                 }
             }
-            */
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle rect, SpriteAnimationData animationData)
         {
-            int frame = animationData.Frame;
-            Rectangle source = sourceRects[frame];
-
-            //Rectangle region = rect;
-            //Rectangle dest = new Rectangle(region.X + ((region.Width / columns) * x), region.Y + ((region.Height / rows) * y), region.Width / columns, region.Height / rows);
-            spriteBatch.Draw(spriteSheet.sheetTexture, rect, source, TextureColor, 0f, new Vector2(0), flip, Depth);
-
-            /*
             int frame = animationData.Frame;
             List<Rectangle> sources = sourceRects[frame];
 
@@ -83,7 +70,6 @@ namespace CityBuilder
                     spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, 0f, new Vector2(0), flip, Depth);
                 }
             }
-            */
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle rect, Color color)
@@ -113,13 +99,28 @@ namespace CityBuilder
 
         public void LoadContent()
         {
-            sourceRects = new List<Rectangle>();
+
+            // Currently Sprite.Draw() renders multiple textures at a time for larger sprites. 
+            // This could be an issue in large-sprite or high-object-count games.
+            // Resolve here be checking to see if a sprite is split into too many textures.
+            // Basically each 'tile' within the spritesheet is broken up into a separate texture, and these textures are stored within sourceRects.
+            // By making the 'source' rectangles larger (combining nearby rectangles) within this List, 
+            // the sprite would only need to call SpriteBatch.Draw() once per object, rather than multiple draws.
+
+            sourceRects = new List<List<Rectangle>>();
+            int eachImageX = (PixelWidth / columns);
+            int eachImageY = (PixelHeight / rows);
             for (int i = 0; i < sheetIndex.Count; i++)
             {
-                int pos = sheetIndex[i];
-                int x = pos % spriteSheet.Columns;
-                int y = pos / spriteSheet.Columns;
-                sourceRects.Add(new Rectangle(spriteSheet.Offset + x * (PixelWidth + spriteSheet.Gutter), spriteSheet.Offset + y * (PixelHeight + spriteSheet.Gutter), PixelWidth, PixelHeight));
+                sourceRects.Add(new List<Rectangle>());
+                List<int> list = sheetIndex[i];
+                for (int j = 0; j < list.Count; j++)
+                {
+                    int pos = list[j];
+                    int x = pos % spriteSheet.Columns;
+                    int y = pos / spriteSheet.Columns;
+                    sourceRects[i].Add(new Rectangle(spriteSheet.Offset + x * (eachImageX + spriteSheet.Gutter), spriteSheet.Offset + y * (eachImageY + spriteSheet.Gutter), eachImageX, eachImageY));
+                }
             }
 
             /*

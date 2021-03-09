@@ -12,7 +12,6 @@ namespace CityBuilder
     public class Grid
     {
         // This struct is passed around so that other classes know where the grid is (for when we have camera movement)
-
         public struct GridInfo
         {
             public Rectangle GridRectangle;
