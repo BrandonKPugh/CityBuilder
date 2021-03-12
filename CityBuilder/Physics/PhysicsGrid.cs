@@ -72,9 +72,9 @@ namespace CityBuilder
                 {
                     foreach(CollisionBody c in Tiles[y * columns + x].Data.Values)
                     {
-                        if(!potentials.ContainsKey(c.id))
+                        if(!potentials.ContainsKey(c.ID))
                         {
-                            potentials.Add(c.id, c);
+                            potentials.Add(c.ID, c);
                         }
                     }
                 }
@@ -91,24 +91,24 @@ namespace CityBuilder
             }
         }
 
-        private List<PhysicsGridTile> GetCoveredTiles(CollisionBody toAdd)
+        private List<PhysicsGridTile> GetCoveredTiles(CollisionBody body)
         {
             int xMin = 0;
             int xMax = 0;
             int yMin = 0;
             int yMax = 0;
 
-            if (toAdd.Shape == CollisionBody.ShapeType.Circle)
+            if (body.Shape == CollisionBody.ShapeType.Circle)
             {
-                CircleBody body = (CircleBody)toAdd;
+                CircleBody body = (CircleBody)body;
                 xMin = ((int)(Math.Max(body.Position.X - body.Radius / 2, 0)) / tileSize);
                 xMax = (int)(Math.Min(body.Position.X + body.Radius / 2, maxWidth - 1)) / tileSize;
                 yMin = ((int)(Math.Max(body.Position.Y - body.Radius / 2, 0)) / tileSize);
                 yMax = (int)(Math.Min(body.Position.Y + body.Radius / 2, maxHeight - 1)) / tileSize;
             }
-            else if (toAdd.Shape == CollisionBody.ShapeType.Rectangle)
+            else if (body.Shape == CollisionBody.ShapeType.Rectangle)
             {
-                RectangleBody body = (RectangleBody)toAdd;
+                RectangleBody body = (RectangleBody)body;
                 xMin = ((int)(Math.Max(body.Position.X, 0)) / tileSize);
                 xMax = (int)(Math.Min(body.Position.X + body.Size.X, maxWidth - 1)) / tileSize;
                 yMin = ((int)(Math.Max(body.Position.Y, 0)) / tileSize);
@@ -131,7 +131,7 @@ namespace CityBuilder
         {
             foreach (PhysicsGridTile tile in GetCoveredTiles(body))
             {
-                tile.Remove(body.id);
+                tile.Remove(body.ID);
             }
         }
     }

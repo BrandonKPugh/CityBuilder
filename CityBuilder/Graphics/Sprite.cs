@@ -39,7 +39,7 @@ namespace CityBuilder
             //AnimationSpeed = 0.5f;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle rect)
+        public void Draw(SpriteBatch spriteBatch, Rectangle destination)
         {
             List<Rectangle> sources = sourceRects[0];
 
@@ -48,14 +48,14 @@ namespace CityBuilder
                 for (int x = 0; x < columns; x++)
                 {
                     Rectangle source = sources[y * columns + x];
-                    Rectangle region = rect;
+                    Rectangle region = destination;
                     Rectangle dest = new Rectangle(region.X + ((region.Width / columns) * x), region.Y + ((region.Height / rows) * y), region.Width / columns, region.Height / rows);
                     spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, 0f, new Vector2(0), flip, Depth);
                 }
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle rect, SpriteAnimationData animationData)
+        public void Draw(SpriteBatch spriteBatch, Rectangle destination, SpriteAnimationData animationData)
         {
             int frame = animationData.Frame;
             List<Rectangle> sources = sourceRects[frame];
@@ -65,7 +65,7 @@ namespace CityBuilder
                 for (int x = 0; x < columns; x++)
                 {
                     Rectangle source = sources[y * columns + x];
-                    Rectangle region = rect;
+                    Rectangle region = destination;
                     Rectangle dest = new Rectangle(region.X + ((region.Width / columns) * x), region.Y + ((region.Height / rows) * y), region.Width / columns, region.Height / rows);
                     spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, 0f, new Vector2(0), flip, Depth);
                 }
@@ -77,7 +77,8 @@ namespace CityBuilder
             Color old = TextureColor;
             TextureColor = color;
             Draw(spriteBatch, rect);
-            TextureColor = color;
+            //TextureColor = color;
+            TextureColor = old;
         }
 
         /*

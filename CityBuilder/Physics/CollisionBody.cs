@@ -17,9 +17,9 @@ namespace CityBuilder
         public Object Parent;
         public Vector2 Position;
         public ShapeType Shape;
-        public uint id;
+        public uint ID;
         private static uint nextId = 0;
-        public static Dictionary<uint, CollisionBody> bodies = new Dictionary<uint, CollisionBody>();
+        public static Dictionary<uint, CollisionBody> Bodies = new Dictionary<uint, CollisionBody>();
 
         public abstract Rectangle Region();
 
@@ -73,7 +73,7 @@ namespace CityBuilder
 
         public static CollisionBody GetById(uint id)
         {
-            return bodies[id];
+            return Bodies[id];
         }
     }
 }

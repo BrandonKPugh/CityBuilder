@@ -16,8 +16,8 @@ namespace CityBuilder
             this.Position = Position;
             Shape = ShapeType.Rectangle;
             this.Size = Size;
-            id = NextId();
-            bodies.Add(id, this);
+            ID = NextId();
+            Bodies.Add(ID, this);
         }
 
         public RectangleBody(Rectangle rect)
@@ -25,8 +25,8 @@ namespace CityBuilder
             this.Position = new Vector2(rect.X,  rect.Y);
             Shape = ShapeType.Rectangle;
             this.Size = new Vector2(rect.Width, rect.Height);
-            id = NextId();
-            bodies.Add(id, this);
+            ID = NextId();
+            Bodies.Add(ID, this);
         }
 
         public override Rectangle Region()
