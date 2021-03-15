@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace CityBuilder
 {
@@ -100,19 +97,19 @@ namespace CityBuilder
 
             if (body.Shape == CollisionBody.ShapeType.Circle)
             {
-                CircleBody body = (CircleBody)body;
-                xMin = ((int)(Math.Max(body.Position.X - body.Radius / 2, 0)) / tileSize);
-                xMax = (int)(Math.Min(body.Position.X + body.Radius / 2, maxWidth - 1)) / tileSize;
-                yMin = ((int)(Math.Max(body.Position.Y - body.Radius / 2, 0)) / tileSize);
-                yMax = (int)(Math.Min(body.Position.Y + body.Radius / 2, maxHeight - 1)) / tileSize;
+                CircleBody circBody = (CircleBody)body;
+                xMin = ((int)(Math.Max(circBody.Position.X - circBody.Radius / 2, 0)) / tileSize);
+                xMax = (int)(Math.Min(circBody.Position.X + circBody.Radius / 2, maxWidth - 1)) / tileSize;
+                yMin = ((int)(Math.Max(circBody.Position.Y - circBody.Radius / 2, 0)) / tileSize);
+                yMax = (int)(Math.Min(circBody.Position.Y + circBody.Radius / 2, maxHeight - 1)) / tileSize;
             }
             else if (body.Shape == CollisionBody.ShapeType.Rectangle)
             {
-                RectangleBody body = (RectangleBody)body;
-                xMin = ((int)(Math.Max(body.Position.X, 0)) / tileSize);
-                xMax = (int)(Math.Min(body.Position.X + body.Size.X, maxWidth - 1)) / tileSize;
-                yMin = ((int)(Math.Max(body.Position.Y, 0)) / tileSize);
-                yMax = (int)(Math.Min(body.Position.Y + body.Size.Y, maxWidth - 1)) / tileSize;
+                RectangleBody rectBody = (RectangleBody)body;
+                xMin = ((int)(Math.Max(rectBody.Position.X, 0)) / tileSize);
+                xMax = (int)(Math.Min(rectBody.Position.X + rectBody.Size.X, maxWidth - 1)) / tileSize;
+                yMin = ((int)(Math.Max(rectBody.Position.Y, 0)) / tileSize);
+                yMax = (int)(Math.Min(rectBody.Position.Y + rectBody.Size.Y, maxWidth - 1)) / tileSize;
             }
 
             List<PhysicsGridTile> toReturn = new List<PhysicsGridTile>();

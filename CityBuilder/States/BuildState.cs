@@ -9,7 +9,6 @@ namespace CityBuilder
 {
     class BuildState : State
     {
-        private SpriteBatch _spriteBatch;
         private SpriteSheet _spriteSheet;
 
 
@@ -25,19 +24,28 @@ namespace CityBuilder
 
             Town town = new Town();
 
-            /*
+            List<Structure.StructureData> structureDataList = new List<Structure.StructureData>();
+            
+            structureDataList.Add(new Structure.StructureData(3, 2, 1, 2));
+            structureDataList.Add(new Structure.StructureData(1, 1, 5, 2));
+            structureDataList.Add(new Structure.StructureData(1, 1, 5, 3));
+            structureDataList.Add(new Structure.StructureData(1, 2, 1, 5));
+            structureDataList.Add(new Structure.StructureData(1, 1, 3, 5));
+            structureDataList.Add(new Structure.StructureData(1, 1, 4, 5));
+            structureDataList.Add(new Structure.StructureData(1, 1, 3, 6));
+            structureDataList.Add(new Structure.StructureData(1, 1, 4, 6));
+            structureDataList.Add(new Structure.StructureData(2, 1, 3, 7));
+            structureDataList.Add(new Structure.StructureData(3, 4, 8, 6));
+
+            foreach (Structure.StructureData data in structureDataList)
+            {
+                Structure testStructure = new Structure(Game, buildGrid, data);
+                town.AddStructure(testStructure);
+            }
+
             Structure.StructureData structureData = new Structure.StructureData(2, 4, 2, 2);
-            Structure testStructure = new Structure(Game, buildGrid, structureData);
-            town.AddStructure(testStructure);
 
-            Structure.StructureData structureData2 = new Structure.StructureData(3, 1, 4, 2);
-            Structure testStructure2 = new Structure(Game, buildGrid, structureData2);
-            town.AddStructure(testStructure2);
-
-            Structure.StructureData structureData3 = new Structure.StructureData(2, 2, 4, 3);
-            Structure testStructure3 = new Structure(Game, buildGrid, structureData3);
-            town.AddStructure(testStructure3);
-            */
+            /*
             Random rand = new Random();
             for(int i = 0; i < 5; i++)
             {
@@ -45,6 +53,7 @@ namespace CityBuilder
                 Structure testStructure = new Structure(Game, buildGrid, structureData);
                 town.AddStructure(testStructure);
             }
+            */
 
             this.Data = new GameData();
             Data.Initialize(town, buildGrid);
@@ -55,7 +64,7 @@ namespace CityBuilder
             SpriteMapper mapper = new SpriteMapper();
             _spriteSheet = mapper.ReadFile(Config.SHEET_CONFIG_FILE_NAME, Content);
 
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
 
 
@@ -72,11 +81,11 @@ namespace CityBuilder
         {
             GraphicsDevice.Clear(Color.DarkOliveGreen);
 
-            Data.Grid.Draw(_spriteBatch);
+            Data.Grid.Draw(SpriteBatch);
 
-            _spriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
-            Data.Town.Draw(_spriteBatch);
-            _spriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
+            Data.Town.Draw(SpriteBatch);
+            SpriteBatch.End();
         }
     }
 }
