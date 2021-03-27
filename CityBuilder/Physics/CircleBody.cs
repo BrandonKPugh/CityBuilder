@@ -16,8 +16,8 @@ namespace CityBuilder
             this.Position = Position;
             Shape = ShapeType.Circle;
             this.Radius = Radius;
-            id = NextId();
-            bodies.Add(id, this);
+            ID = NextId();
+            Bodies.Add(ID, this);
         }
 
         public override Rectangle Region()

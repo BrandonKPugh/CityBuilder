@@ -13,6 +13,7 @@ namespace CityBuilder
         protected GameData Data;
         protected ContentManager Content;
         protected GraphicsDevice GraphicsDevice;
+        protected SpriteBatch SpriteBatch;
         public State(Game1 game, GameData data, ContentManager content, GraphicsDevice graphicsDevice)
         {
             this.Game = game;

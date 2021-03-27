@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CityBuilder.Interface;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,9 +10,7 @@ namespace CityBuilder
 {
     class BuildState : State
     {
-        private SpriteBatch _spriteBatch;
         private SpriteSheet _spriteSheet;
-
 
         public BuildState(Game1 game, GameData data, ContentManager content, GraphicsDevice graphics) : base(game, data, content, graphics)
         {
@@ -25,19 +24,28 @@ namespace CityBuilder
 
             Town town = new Town();
 
-            /*
+            List<Structure.StructureData> structureDataList = new List<Structure.StructureData>();
+            
+            structureDataList.Add(new Structure.StructureData(3, 2, 1, 2));
+            structureDataList.Add(new Structure.StructureData(1, 1, 5, 2));
+            structureDataList.Add(new Structure.StructureData(1, 1, 5, 3));
+            structureDataList.Add(new Structure.StructureData(1, 2, 1, 5));
+            structureDataList.Add(new Structure.StructureData(1, 1, 3, 5));
+            structureDataList.Add(new Structure.StructureData(1, 1, 4, 5));
+            structureDataList.Add(new Structure.StructureData(1, 1, 3, 6));
+            structureDataList.Add(new Structure.StructureData(1, 1, 4, 6));
+            structureDataList.Add(new Structure.StructureData(2, 1, 3, 7));
+            structureDataList.Add(new Structure.StructureData(3, 4, 8, 6));
+
+            foreach (Structure.StructureData data in structureDataList)
+            {
+                Structure testStructure = new Structure(Game, buildGrid, data);
+                town.AddStructure(testStructure);
+            }
+
             Structure.StructureData structureData = new Structure.StructureData(2, 4, 2, 2);
-            Structure testStructure = new Structure(Game, buildGrid, structureData);
-            town.AddStructure(testStructure);
 
-            Structure.StructureData structureData2 = new Structure.StructureData(3, 1, 4, 2);
-            Structure testStructure2 = new Structure(Game, buildGrid, structureData2);
-            town.AddStructure(testStructure2);
-
-            Structure.StructureData structureData3 = new Structure.StructureData(2, 2, 4, 3);
-            Structure testStructure3 = new Structure(Game, buildGrid, structureData3);
-            town.AddStructure(testStructure3);
-            */
+            /*
             Random rand = new Random();
             for(int i = 0; i < 5; i++)
             {
@@ -45,9 +53,26 @@ namespace CityBuilder
                 Structure testStructure = new Structure(Game, buildGrid, structureData);
                 town.AddStructure(testStructure);
             }
+            */
+
+            /*
+            Texture2D buttonTexture = Content.Load<Texture2D>("Button");
+            SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
+            TestButton1 = new Button(buttonTexture, buttonFont);
+            TestButton1.Position = new Vector2(820, 590);
+            TestButton1.Size = new Vector2(760, 190);
+            TestButton1.Click += TestButton1_Click;
+            TestButton1.Text = "Test Text Here";
+            TestButton1.PenColour = Color.Black;
+            */
 
             this.Data = new GameData();
             Data.Initialize(town, buildGrid);
+        }
+
+        private void TestButton1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public override void LoadContent()
@@ -55,9 +80,9 @@ namespace CityBuilder
             SpriteMapper mapper = new SpriteMapper();
             _spriteSheet = mapper.ReadFile(Config.SHEET_CONFIG_FILE_NAME, Content);
 
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-
+            
 
             Data.Town.LoadContent(_spriteSheet);
 
@@ -66,17 +91,18 @@ namespace CityBuilder
 
         public override void Update(GameTime gameTime)
         {
-
+            //TestButton1.Update(gameTime);
         }
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkOliveGreen);
 
-            Data.Grid.Draw(_spriteBatch);
+            Data.Grid.Draw(SpriteBatch);
 
-            _spriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
-            Data.Town.Draw(_spriteBatch);
-            _spriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            Data.Town.Draw(SpriteBatch);
+            //TestButton1.Draw(gameTime, SpriteBatch);
+            SpriteBatch.End();
         }
     }
 }

@@ -25,18 +25,27 @@ namespace CityBuilder
             {
                 this.tilesX = tilesWide;
                 this.tilesY = tilesHigh;
-                this.x = x_percent;
-                this.y = y_percent;
-                this.width = width_percent;
-                this.height = height_percent;
+                this.x = x_percent * Config.GAME_WIDTH;
+                this.y = y_percent * Config.GAME_HEIGHT;
+                this.width = width_percent * Config.GAME_WIDTH;
+                this.height = height_percent * Config.GAME_HEIGHT;
+            }
+            public GRID_INFO(int tilesWide, int tilesHigh, int x, int y, int width, int height)
+            {
+                this.tilesX = tilesWide;
+                this.tilesY = tilesHigh;
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
             }
             public int TilesWide { get { return tilesX; } }
             public int TilesHigh { get { return tilesY; } }
 
-            public int X { get { return (int)(this.x * Config.GAME_WIDTH); } }
-            public int Y { get { return (int)(this.y * Config.GAME_HEIGHT); } }
-            public int Width { get { return (int)(this.width * Config.GAME_WIDTH); } }
-            public int Height { get { return (int)(this.height * Config.GAME_HEIGHT); } }
+            public int X { get { return (int)(this.x); } }
+            public int Y { get { return (int)(this.y); } }
+            public int Width { get { return (int)(this.width); } }
+            public int Height { get { return (int)(this.height); } }
             public Rectangle Rect { get { return new Rectangle(X, Y, Width, Height); } }
         }
 
@@ -46,7 +55,8 @@ namespace CityBuilder
         }
 
         // GRID_INFO(tilesWide, tilesHigh, x, y, width, height);
-        public static GRID_INFO BUILD_GRID = new GRID_INFO(24, 12, 0.1f, .1f, 0.8f, .8f);
+        //public static GRID_INFO BUILD_GRID = new GRID_INFO(20, 20, 0.1f, .1f, 0.4f, .8f);
+        public static GRID_INFO BUILD_GRID = new GRID_INFO(12, 12, 20, 20, 760, 760);
 
         public static Color GRID_COLOR = new Color(30, 30, 30);
     }

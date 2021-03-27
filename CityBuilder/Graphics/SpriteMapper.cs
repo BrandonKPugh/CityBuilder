@@ -12,7 +12,7 @@ namespace CityBuilder
 {
     class SpriteMapper
     {
-        public enum ConnectionType
+        private enum ConnectionType
         {
             Normal,
             Horizontal,
@@ -198,7 +198,7 @@ namespace CityBuilder
             return line.Substring(1, length);
         }
 
-        public void ReadLine(string line, out List<int> numbers, out List<ConnectionType> connections)
+        private void ReadLine(string line, out List<int> numbers, out List<ConnectionType> connections)
         {
             numbers = new List<int>();
             connections = new List<ConnectionType>();
@@ -308,7 +308,7 @@ namespace CityBuilder
                 return ConnectionType.Error;
         }
 
-        public List<List<int>> ProcessCommand(List<int> numbers, List<ConnectionType> connections, int columns)
+        private List<List<int>> ProcessCommand(List<int> numbers, List<ConnectionType> connections, int columns)
         {
             if(numbers == null || connections == null || numbers.Count == 0)
             {
@@ -470,7 +470,7 @@ namespace CityBuilder
             throw new FormatException("Error parsing Sprite Mapper File");
         }
 
-        public List<int> Horizontal(int a, int b)
+        private List<int> Horizontal(int a, int b)
         {
             List<int> list = new List<int>();
 
@@ -482,7 +482,7 @@ namespace CityBuilder
             return list;
         }
 
-        public List<int> Vertical(int a, int b, int columns)
+        private List<int> Vertical(int a, int b, int columns)
         {
             List<int> list = new List<int>();
 
@@ -494,7 +494,7 @@ namespace CityBuilder
             return list;
         }
 
-        public List<int> Rectangle(int a, int b, int columns)
+        private List<int> Rectangle(int a, int b, int columns)
         {
             int columnOfA = a % columns;
             int columnOfB = b % columns;
@@ -534,7 +534,7 @@ namespace CityBuilder
         }
 
         // Returns a as the first list in a set of lists
-        public List<List<int>> HorizontalFrames(List<int> a, int b)
+        private List<List<int>> HorizontalFrames(List<int> a, int b)
         {
             List<List<int>> toReturn = new List<List<int>>();
 
@@ -557,7 +557,7 @@ namespace CityBuilder
         }
 
         // Returns a as the first list in a set of lists
-        public List<List<int>> VerticalFrames(List<int> a, int b, int columns)
+        private List<List<int>> VerticalFrames(List<int> a, int b, int columns)
         {
             List<List<int>> toReturn = new List<List<int>>();
 

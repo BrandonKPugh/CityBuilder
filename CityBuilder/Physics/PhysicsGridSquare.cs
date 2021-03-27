@@ -22,12 +22,12 @@ namespace CityBuilder
 
         public void Add(CollisionBody body)
         {
-            Data.Add(body.id, body);
+            Data.Add(body.ID, body);
         }
 
         public void Remove(CollisionBody body)
         {
-            Data.Remove(body.id);
+            Data.Remove(body.ID);
         }
 
         public void Remove(uint collisionBodyId)
