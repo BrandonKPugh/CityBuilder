@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CityBuilder.Interface;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,7 +11,6 @@ namespace CityBuilder
     class BuildState : State
     {
         private SpriteSheet _spriteSheet;
-
 
         public BuildState(Game1 game, GameData data, ContentManager content, GraphicsDevice graphics) : base(game, data, content, graphics)
         {
@@ -55,8 +55,24 @@ namespace CityBuilder
             }
             */
 
+            /*
+            Texture2D buttonTexture = Content.Load<Texture2D>("Button");
+            SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
+            TestButton1 = new Button(buttonTexture, buttonFont);
+            TestButton1.Position = new Vector2(820, 590);
+            TestButton1.Size = new Vector2(760, 190);
+            TestButton1.Click += TestButton1_Click;
+            TestButton1.Text = "Test Text Here";
+            TestButton1.PenColour = Color.Black;
+            */
+
             this.Data = new GameData();
             Data.Initialize(town, buildGrid);
+        }
+
+        private void TestButton1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public override void LoadContent()
@@ -66,7 +82,7 @@ namespace CityBuilder
 
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-
+            
 
             Data.Town.LoadContent(_spriteSheet);
 
@@ -75,7 +91,7 @@ namespace CityBuilder
 
         public override void Update(GameTime gameTime)
         {
-
+            //TestButton1.Update(gameTime);
         }
         public override void Draw(GameTime gameTime)
         {
@@ -83,8 +99,9 @@ namespace CityBuilder
 
             Data.Grid.Draw(SpriteBatch);
 
-            SpriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
             Data.Town.Draw(SpriteBatch);
+            //TestButton1.Draw(gameTime, SpriteBatch);
             SpriteBatch.End();
         }
     }
