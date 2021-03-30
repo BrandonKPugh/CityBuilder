@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CityBuilder.Interface
 {
-    public abstract class UIGroup : UI_Component
+    public class UIGroup : UI_Component
     {
         public List<UI_Component> UI_Components;
 

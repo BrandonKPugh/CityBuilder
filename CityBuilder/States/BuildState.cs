@@ -11,6 +11,7 @@ namespace CityBuilder
     class BuildState : State
     {
         private SpriteSheet _spriteSheet;
+        private UIGroup _ui;
 
         public BuildState(Game1 game, GameData data, ContentManager content, GraphicsDevice graphics) : base(game, data, content, graphics)
         {
@@ -57,7 +58,6 @@ namespace CityBuilder
 
             /*
             Texture2D buttonTexture = Content.Load<Texture2D>("Button");
-            SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
             TestButton1 = new Button(buttonTexture, buttonFont);
             TestButton1.Position = new Vector2(820, 590);
             TestButton1.Size = new Vector2(760, 190);
@@ -65,6 +65,25 @@ namespace CityBuilder
             TestButton1.Text = "Test Text Here";
             TestButton1.PenColour = Color.Black;
             */
+
+            SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
+            _ui = new UIGroup();
+            
+            TextBox woodLabel = new TextBox(buttonFont);
+            woodLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_WOOD;
+            _ui.Add(woodLabel);
+
+            TextBox stoneLabel = new TextBox(buttonFont);
+            stoneLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_STONE;
+            _ui.Add(stoneLabel);
+
+            TextBox oreLabel = new TextBox(buttonFont);
+            oreLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_ORE;
+            _ui.Add(oreLabel);
+
+            TextBox metalLabel = new TextBox(buttonFont);
+            metalLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_METAL;
+            _ui.Add(metalLabel);
 
             this.Data = new GameData();
             Data.Initialize(town, buildGrid);
@@ -82,7 +101,6 @@ namespace CityBuilder
 
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            
 
             Data.Town.LoadContent(_spriteSheet);
 
@@ -92,6 +110,7 @@ namespace CityBuilder
         public override void Update(GameTime gameTime)
         {
             //TestButton1.Update(gameTime);
+            _ui.Update(gameTime);
         }
         public override void Draw(GameTime gameTime)
         {
@@ -102,6 +121,7 @@ namespace CityBuilder
             SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
             Data.Town.Draw(SpriteBatch);
             //TestButton1.Draw(gameTime, SpriteBatch);
+            _ui.Draw(gameTime, SpriteBatch);
             SpriteBatch.End();
         }
     }

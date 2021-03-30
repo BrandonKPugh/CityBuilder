@@ -226,6 +226,7 @@ namespace CityBuilder.Interface
         public const float BUTTON_PADDING_RATIO = 0.90f;
         public static Color BUTTON_SELECTED = Color.SkyBlue;
         public static Color BAR_PENCOLOR = Color.Black;
+        public static Color TEXTBOX_TEXTCOLOR = Color.Black;
         
         public static BORDERBOX_INFO TOOLTIP_BOX_SIZE = new BORDERBOX_INFO(1000, Color.White, 0f, 0f, 0.075f, 0.05f, 0);
         public static TEXTBOX_INFO TOOLTIP_TEXT = new TEXTBOX_INFO("", Color.Black, 0f, 0f, 0.075f, 0.05f);
@@ -295,6 +296,16 @@ namespace CityBuilder.Interface
         #endregion
 
         #region BUILDMODE
+
+        public static TEXTBOX_INFO RESOURCE_COUNTER_WOOD = new TEXTBOX_INFO("0", TEXTBOX_TEXTCOLOR, 820, 20, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_LABEL_WOOD = new TEXTBOX_INFO("WOOD", TEXTBOX_TEXTCOLOR, 920, 20, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_COUNTER_STONE = new TEXTBOX_INFO("0", TEXTBOX_TEXTCOLOR, 820, 80, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_LABEL_STONE = new TEXTBOX_INFO("STONE", TEXTBOX_TEXTCOLOR, 920, 80, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_COUNTER_ORE = new TEXTBOX_INFO("0", TEXTBOX_TEXTCOLOR, 820, 140, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_LABEL_ORE = new TEXTBOX_INFO("ORE", TEXTBOX_TEXTCOLOR, 920, 140, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_COUNTER_METAL = new TEXTBOX_INFO("0", TEXTBOX_TEXTCOLOR, 820, 200, 80, 40);
+        public static TEXTBOX_INFO RESOURCE_LABEL_METAL = new TEXTBOX_INFO("METAL", TEXTBOX_TEXTCOLOR, 920, 200, 80, 40);
+
         /*
         public static BUTTON_INFO BUILDMODE_COMBATMODE = new BUTTON_INFO("Combat Mode", 0.625f, 0.825f, 0.25f, 0.125f);
 
