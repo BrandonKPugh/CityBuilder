@@ -59,5 +59,11 @@ namespace CityBuilder
         public static GRID_INFO BUILD_GRID = new GRID_INFO(12, 12, 20, 20, 760, 760);
 
         public static Color GRID_COLOR = new Color(30, 30, 30);
+
+        public static int MAX_RESOURCE_VALUE = 99999999;
+        public static int INITIAL_RESOURCE_VALUE_WOOD = 100;
+        public static int INITIAL_RESOURCE_VALUE_STONE = 100;
+        public static int INITIAL_RESOURCE_VALUE_ORE = 100;
+        public static int INITIAL_RESOURCE_VALUE_METAL = 100;
     }
 }

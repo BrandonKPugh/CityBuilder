@@ -11,7 +11,8 @@ namespace CityBuilder
     class BuildState : State
     {
         private SpriteSheet _spriteSheet;
-        private UIGroup _ui;
+        private BuildStateUI _ui;
+        float count = 1.0f;
 
         public BuildState(Game1 game, GameData data, ContentManager content, GraphicsDevice graphics) : base(game, data, content, graphics)
         {
@@ -20,13 +21,93 @@ namespace CityBuilder
 
         public override void Initialize()
         {
+            _ui = InitializeUI();
+            this.Data = InitializeGameData();
+        }
 
+        public override void LoadContent()
+        {
+            SpriteMapper mapper = new SpriteMapper();
+            _spriteSheet = mapper.ReadFile(Config.SHEET_CONFIG_FILE_NAME, Content);
+
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+
+
+            Data.Town.LoadContent(_spriteSheet);
+
+            Data.Grid.LoadContent(_spriteSheet.GetSprite("tile"));
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            _ui.Update(gameTime);
+        }
+        public override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.DarkOliveGreen);
+
+            Data.Grid.Draw(SpriteBatch);
+
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+
+            Data.Town.Draw(SpriteBatch);
+            _ui.Draw(gameTime, SpriteBatch);
+
+            SpriteBatch.End();
+        }
+
+        private BuildStateUI InitializeUI()
+        {
+            SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
+            BuildStateUI _toReturn = new BuildStateUI();
+
+            TextBox woodLabel = new TextBox(buttonFont);
+            TextBox woodCount = new TextBox(buttonFont);
+            woodLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_WOOD;
+            woodCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_WOOD;
+            woodLabel.TextAlignment = TextBox.TextAlign.Left;
+            woodCount.TextAlignment = TextBox.TextAlign.Right;
+            _toReturn.Add(woodLabel);
+            _toReturn.Register(woodCount, GameCode.Resource.ResourceType.Wood);
+
+            TextBox stoneLabel = new TextBox(buttonFont);
+            TextBox stoneCount = new TextBox(buttonFont);
+            stoneLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_STONE;
+            stoneCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_STONE;
+            stoneLabel.TextAlignment = TextBox.TextAlign.Left;
+            stoneCount.TextAlignment = TextBox.TextAlign.Right;
+            _toReturn.Add(stoneLabel);
+            _toReturn.Register(stoneCount, GameCode.Resource.ResourceType.Stone);
+
+            TextBox oreLabel = new TextBox(buttonFont);
+            TextBox oreCount = new TextBox(buttonFont);
+            oreLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_ORE;
+            oreCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_ORE;
+            oreLabel.TextAlignment = TextBox.TextAlign.Left;
+            oreCount.TextAlignment = TextBox.TextAlign.Right;
+            _toReturn.Add(oreLabel);
+            _toReturn.Register(oreCount, GameCode.Resource.ResourceType.Ore);
+
+            TextBox metalLabel = new TextBox(buttonFont);
+            TextBox metalCount = new TextBox(buttonFont);
+            metalLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_METAL;
+            metalCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_METAL;
+            metalLabel.TextAlignment = TextBox.TextAlign.Left;
+            metalCount.TextAlignment = TextBox.TextAlign.Right;
+            _toReturn.Add(metalLabel);
+            _toReturn.Register(metalCount, GameCode.Resource.ResourceType.Metal);
+
+            return _toReturn;
+        }
+
+        private GameData InitializeGameData()
+        {
             Grid buildGrid = new Grid(Config.BUILD_GRID);
 
             Town town = new Town();
 
             List<Structure.StructureData> structureDataList = new List<Structure.StructureData>();
-            
+
             structureDataList.Add(new Structure.StructureData(3, 2, 1, 2));
             structureDataList.Add(new Structure.StructureData(1, 1, 5, 2));
             structureDataList.Add(new Structure.StructureData(1, 1, 5, 3));
@@ -46,83 +127,9 @@ namespace CityBuilder
 
             Structure.StructureData structureData = new Structure.StructureData(2, 4, 2, 2);
 
-            /*
-            Random rand = new Random();
-            for(int i = 0; i < 5; i++)
-            {
-                Structure.StructureData structureData = new Structure.StructureData(rand.Next(1, 4), rand.Next(1, 4), rand.Next(0, Config.BUILD_GRID.TilesWide), rand.Next(0, Config.BUILD_GRID.TilesHigh));
-                Structure testStructure = new Structure(Game, buildGrid, structureData);
-                town.AddStructure(testStructure);
-            }
-            */
-
-            /*
-            Texture2D buttonTexture = Content.Load<Texture2D>("Button");
-            TestButton1 = new Button(buttonTexture, buttonFont);
-            TestButton1.Position = new Vector2(820, 590);
-            TestButton1.Size = new Vector2(760, 190);
-            TestButton1.Click += TestButton1_Click;
-            TestButton1.Text = "Test Text Here";
-            TestButton1.PenColour = Color.Black;
-            */
-
-            SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
-            _ui = new UIGroup();
-            
-            TextBox woodLabel = new TextBox(buttonFont);
-            woodLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_WOOD;
-            _ui.Add(woodLabel);
-
-            TextBox stoneLabel = new TextBox(buttonFont);
-            stoneLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_STONE;
-            _ui.Add(stoneLabel);
-
-            TextBox oreLabel = new TextBox(buttonFont);
-            oreLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_ORE;
-            _ui.Add(oreLabel);
-
-            TextBox metalLabel = new TextBox(buttonFont);
-            metalLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_METAL;
-            _ui.Add(metalLabel);
-
-            this.Data = new GameData();
+            GameData toReturn = new GameData();
             Data.Initialize(town, buildGrid);
-        }
-
-        private void TestButton1_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void LoadContent()
-        {
-            SpriteMapper mapper = new SpriteMapper();
-            _spriteSheet = mapper.ReadFile(Config.SHEET_CONFIG_FILE_NAME, Content);
-
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
-
-
-            Data.Town.LoadContent(_spriteSheet);
-
-            Data.Grid.LoadContent(_spriteSheet.GetSprite("tile"));
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            //TestButton1.Update(gameTime);
-            _ui.Update(gameTime);
-        }
-        public override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.DarkOliveGreen);
-
-            Data.Grid.Draw(SpriteBatch);
-
-            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            Data.Town.Draw(SpriteBatch);
-            //TestButton1.Draw(gameTime, SpriteBatch);
-            _ui.Draw(gameTime, SpriteBatch);
-            SpriteBatch.End();
+            return Data;
         }
     }
 }

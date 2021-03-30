@@ -13,6 +13,8 @@ namespace CityBuilder.Interface
         public string Text { get; set; }
         public Color Color { get; set; }
         public ControlConstants.TEXTBOX_INFO TextBoxInfo { set { Position = new Vector2(value.X, value.Y); Size = new Vector2(value.Width, value.Height); Text = value.Text; Color = value.Color; } }
+        public enum TextAlign { Left, Center, Right };
+        public TextAlign TextAlignment = TextAlign.Center;
 
         public Rectangle Location { get { return new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y); } }
 
@@ -30,7 +32,12 @@ namespace CityBuilder.Interface
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            CenterString(Text, _font, Position, Size, spriteBatch, Color);
+            if(this.TextAlignment == TextAlign.Left)
+                LeftString(Text, _font, Position, Size, spriteBatch, Color);
+            else if (this.TextAlignment == TextAlign.Center)
+                CenterString(Text, _font, Position, Size, spriteBatch, Color);
+            else if (this.TextAlignment == TextAlign.Right)
+                RightString(Text, _font, Position, Size, spriteBatch, Color);
         }
 
         public override void Update(GameTime gameTime)
