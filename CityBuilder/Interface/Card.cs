@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CityBuilder.Interface
 {
-    public class PlaceableCard : Button
+    public class Card : Button
     {
         public override Vector2 Position
         { 
@@ -18,8 +18,15 @@ namespace CityBuilder.Interface
             }
         }
         private UIGroup uiData;
-        public PlaceableCard()
+        public Card()
         {
+            uiData = new UIGroup();
+            uiData.Position = this.Position;
+        }
+
+        public Card(Texture2D texture)
+        {
+            this._texture = texture;
             uiData = new UIGroup();
             uiData.Position = this.Position;
         }

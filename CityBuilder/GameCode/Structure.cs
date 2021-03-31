@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CityBuilder.GameCode;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,21 +10,47 @@ namespace CityBuilder
     {
         public StructureData Data;
 
+        public enum StructureType
+        {
+            House,
+            Warehouse
+        }
+
+        public struct StructureSize
+        {
+            public StructureSize(int width, int height)
+            {
+                this.Width = width;
+                this.Height = height;
+            }
+            public int Width;
+            public int Height;
+        }
+
         public struct StructureData
         {
             public StructureData(int width, int height, int x1, int y1)
             {
-                this.width = width;
-                this.height = height;
+                this.Size = new StructureSize(width, height);
                 this.X1 = x1;
                 this.Y1 = y1;
+                Cost = new Dictionary<Resource.ResourceType, int>();
             }
-            public int width;
-            public int height;
+            public StructureData(StructureSize size, int x1, int y1)
+            {
+                this.Size = size;
+                this.X1 = x1;
+                this.Y1 = y1;
+                Cost = new Dictionary<Resource.ResourceType, int>();
+            }
+            public StructureSize Size;
             public int X1;
             public int Y1;
-            public int X2 { get { return X1 + width - 1; } }
-            public int Y2 { get { return Y1 = height - 1; } }
+            public int X2 { get { return X1 + Size.Width - 1; } }
+            public int Y2 { get { return Y1 = Size.Height - 1; } }
+            public int Height { get { return Size.Height; } }
+            public int Width { get { return Size.Width; } }
+            public Dictionary<Resource.ResourceType, int> Cost;
         }
 
         public Structure(Game1 game, CollisionBody collision, StructureData data) : base(game, collision)
@@ -32,7 +59,7 @@ namespace CityBuilder
             if(collision.Shape == CollisionBody.ShapeType.Rectangle)
             {
                 RectangleBody rect = ((RectangleBody)this.Collision);
-                rect.Size = new Vector2(collision.Region().Width * data.width, collision.Region().Height * data.height);
+                rect.Size = new Vector2(collision.Region().Width * data.Width, collision.Region().Height * data.Height);
             }
         }
 
@@ -40,7 +67,7 @@ namespace CityBuilder
         {
             RectangleBody rect = new RectangleBody(buildGrid.TileToPixelRect(data.X1, data.Y1));
             this.Collision = rect;
-            rect.Size = new Vector2(rect.Region().Width * data.width, rect.Region().Height * data.height);
+            rect.Size = new Vector2(rect.Region().Width * data.Width, rect.Region().Height * data.Height);
             this.Data = data;
 
             Game = game;
@@ -59,6 +86,31 @@ namespace CityBuilder
         public void RotateLeft()
         {
             throw new NotImplementedException();
+        }
+
+        public static Dictionary<Resource.ResourceType, int> GetStructureCost(StructureType structureType)
+        {
+            Dictionary<Resource.ResourceType, int> cost = new Dictionary<Resource.ResourceType, int>();
+            switch(structureType)
+            {
+                case StructureType.House:
+                    {
+                        cost.Add(Resource.ResourceType.Wood, 50);
+                        cost.Add(Resource.ResourceType.Stone, 25);
+                        break;
+                    }
+                case StructureType.Warehouse:
+                    {
+                        cost.Add(Resource.ResourceType.Wood, 400);
+                        cost.Add(Resource.ResourceType.Stone, 150);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+            return cost;
         }
     }
 }

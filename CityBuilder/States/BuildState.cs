@@ -20,8 +20,11 @@ namespace CityBuilder
 
         public override void Initialize()
         {
-            _ui = InitializeUI();
             this.Data = InitializeGameData();
+            this.Data.Town.Initialize();
+            _ui = InitializeUI();
+            _ui.Initialize(this.Data.Town);
+            this.Data.Town.AddCards(_ui.ScrollBox);
         }
 
         public override void LoadContent()
@@ -58,8 +61,7 @@ namespace CityBuilder
         private BuildStateUI InitializeUI()
         {
             SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
-            BuildStateUI _toReturn = new BuildStateUI();
-
+            BuildStateUI newBuildStateUI = new BuildStateUI();
 
             #region Resource Labels
             TextBox woodLabel = new TextBox(buttonFont);
@@ -68,8 +70,8 @@ namespace CityBuilder
             woodCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_WOOD;
             woodLabel.TextAlignment = TextBox.TextAlign.Left;
             woodCount.TextAlignment = TextBox.TextAlign.Right;
-            _toReturn.Add(woodLabel);
-            _toReturn.Register(woodCount, GameCode.Resource.ResourceType.Wood);
+            newBuildStateUI.Add(woodLabel);
+            newBuildStateUI.RegisterResourceLabel(woodCount, GameCode.Resource.ResourceType.Wood);
 
             TextBox stoneLabel = new TextBox(buttonFont);
             TextBox stoneCount = new TextBox(buttonFont);
@@ -77,8 +79,8 @@ namespace CityBuilder
             stoneCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_STONE;
             stoneLabel.TextAlignment = TextBox.TextAlign.Left;
             stoneCount.TextAlignment = TextBox.TextAlign.Right;
-            _toReturn.Add(stoneLabel);
-            _toReturn.Register(stoneCount, GameCode.Resource.ResourceType.Stone);
+            newBuildStateUI.Add(stoneLabel);
+            newBuildStateUI.RegisterResourceLabel(stoneCount, GameCode.Resource.ResourceType.Stone);
 
             TextBox oreLabel = new TextBox(buttonFont);
             TextBox oreCount = new TextBox(buttonFont);
@@ -86,8 +88,8 @@ namespace CityBuilder
             oreCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_ORE;
             oreLabel.TextAlignment = TextBox.TextAlign.Left;
             oreCount.TextAlignment = TextBox.TextAlign.Right;
-            _toReturn.Add(oreLabel);
-            _toReturn.Register(oreCount, GameCode.Resource.ResourceType.Ore);
+            newBuildStateUI.Add(oreLabel);
+            newBuildStateUI.RegisterResourceLabel(oreCount, GameCode.Resource.ResourceType.Ore);
 
             TextBox metalLabel = new TextBox(buttonFont);
             TextBox metalCount = new TextBox(buttonFont);
@@ -95,24 +97,20 @@ namespace CityBuilder
             metalCount.TextBoxInfo = ControlConstants.RESOURCE_COUNTER_METAL;
             metalLabel.TextAlignment = TextBox.TextAlign.Left;
             metalCount.TextAlignment = TextBox.TextAlign.Right;
-            _toReturn.Add(metalLabel);
-            _toReturn.Register(metalCount, GameCode.Resource.ResourceType.Metal);
+            newBuildStateUI.Add(metalLabel);
+            newBuildStateUI.RegisterResourceLabel(metalCount, GameCode.Resource.ResourceType.Metal);
             #endregion
 
             #region ScrollBox
 
-            UIBox scrollBox = new UIBox(Content, ControlConstants.BUILD_SCROLLBOX);
-            _toReturn.Add(scrollBox);
-            Button scrollBoxUpArrow = new Button(Content, ControlConstants.BUILD_SCROLLBOX_UP);
-            _toReturn.Add(scrollBoxUpArrow);
-            Button scrollBoxDownArrow = new Button(Content, ControlConstants.BUILD_SCROLLBOX_DOWN);
-            _toReturn.Add(scrollBoxDownArrow);
-            UIBox scrollBoxSlider = new UIBox(Content, ControlConstants.BUILD_SCROLLBOX_SLIDER);
-            _toReturn.Add(scrollBoxSlider);
+            ScrollBox scrollBox = new ScrollBox(Content, ControlConstants.BUILD_SCROLLBOX);
+            newBuildStateUI.Add(scrollBox);
+            newBuildStateUI.RegisterScrollBox(scrollBox);
+
 
             #endregion
 
-            return _toReturn;
+            return newBuildStateUI;
         }
 
         private GameData InitializeGameData()
