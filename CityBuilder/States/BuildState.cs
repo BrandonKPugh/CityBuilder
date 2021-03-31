@@ -108,7 +108,8 @@ namespace CityBuilder
             _toReturn.Add(scrollBoxUpArrow);
             Button scrollBoxDownArrow = new Button(Content, ControlConstants.BUILD_SCROLLBOX_DOWN);
             _toReturn.Add(scrollBoxDownArrow);
-
+            UIBox scrollBoxSlider = new UIBox(Content, ControlConstants.BUILD_SCROLLBOX_SLIDER);
+            _toReturn.Add(scrollBoxSlider);
 
             #endregion
 
