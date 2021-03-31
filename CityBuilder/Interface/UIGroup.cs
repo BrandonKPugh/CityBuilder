@@ -12,7 +12,33 @@ namespace CityBuilder.Interface
     {
         public List<UI_Component> UI_Components;
 
-        public override Vector2 Position { get { return new Vector2(0); } }
+        private Vector2 position;
+        public override Vector2 Position
+        { 
+            set
+            {
+                // If you change the Position of a UIGroup, it will change the position of every
+                // UI_Component by the same difference.
+                Vector2 translate;
+                if (this.position == null)
+                {
+                    translate = value;
+                }
+                else
+                {
+                    translate = this.position - value;
+                }
+                foreach(UI_Component component in UI_Components)
+                {
+                    component.Position -= translate;
+                }
+                this.position = value;
+            }
+            get 
+            { 
+                return this.position; 
+            } 
+        }
         public override Vector2 Size { get { return new Vector2(0); } }
 
         public UIGroup()
@@ -46,7 +72,7 @@ namespace CityBuilder.Interface
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch  spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach(UI_Component ui_component in UI_Components)
             {

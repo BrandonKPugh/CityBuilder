@@ -12,7 +12,6 @@ namespace CityBuilder
     {
         private SpriteSheet _spriteSheet;
         private BuildStateUI _ui;
-        float count = 1.0f;
 
         public BuildState(Game1 game, GameData data, ContentManager content, GraphicsDevice graphics) : base(game, data, content, graphics)
         {

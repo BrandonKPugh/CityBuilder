@@ -52,6 +52,10 @@ namespace CityBuilder.Interface
 
         #region Methods
 
+        public Button()
+        {
+
+        }
         public Button(Texture2D texture, SpriteFont font)
         {
             _texture = texture;
