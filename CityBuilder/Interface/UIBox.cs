@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace CityBuilder.Interface
 
         public ControlConstants.UIBOX_INFO UIBoxInfo { set { Position = new Vector2(value.X, value.Y); Size = new Vector2(value.Width, value.Height); Color = value.Color; } }
 
+        public UIBox(ContentManager content, ControlConstants.UIBOX_INFO uiBoxInfo)
+        {
+            this.UIBoxInfo = uiBoxInfo;
+            this._texture = content.Load<Texture2D>(uiBoxInfo.Texture_Name);
+        }
         public UIBox(Texture2D texture)
         {
             _texture = texture;

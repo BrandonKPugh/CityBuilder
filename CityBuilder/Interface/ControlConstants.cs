@@ -11,22 +11,29 @@ namespace CityBuilder.Interface
     public static class ControlConstants
     {
         #region STRUCTS
-        // Button info is created with Text, and four floats (representing percentages of the screen's width/height. 0.1f = 10% from the edge and 0.5f = the center of the screen)
-        // BUTTON_INFO(Text, X, Y, Width, Height)
+        
         public struct BUTTON_INFO
         {
+            // Button info is created with Text, and four floats (representing percentages of the screen's width/height. 0.1f = 10% from the edge and 0.5f = the center of the screen)
+            // BUTTON_INFO(Text, X, Y, Width, Height)
             private int x, y, width, height;
             private string text;
-            public BUTTON_INFO(string text, float x_percent, float y_percent, float width_percent, float height_percent)
+            private string texture_name;
+            private string font_name;
+            public BUTTON_INFO(string textureName, string fontName, string text, float x_percent, float y_percent, float width_percent, float height_percent)
             {
+                this.texture_name = textureName;
+                this.font_name = fontName;
                 this.x = (int)(x_percent * Config.GAME_WIDTH);
                 this.y = (int)(y_percent * Config.GAME_HEIGHT);
                 this.width = (int)(width_percent * Config.GAME_WIDTH);
                 this.height = (int)(height_percent * Config.GAME_HEIGHT);
                 this.text = text;
             }
-            public BUTTON_INFO(string text, int x, int y, int width, int height)
+            public BUTTON_INFO(string textureName, string fontName, string text, int x, int y, int width, int height)
             {
+                this.texture_name = textureName;
+                this.font_name = fontName;
                 this.x = x;
                 this.y = y;
                 this.width = width;
@@ -38,6 +45,8 @@ namespace CityBuilder.Interface
             public int Width { get { return this.width; }}
             public int Height{ get { return this.height; }}
             public string Text { get { return text; }}
+            public string Texture_Name { get { return texture_name; } }
+            public string Font_Name { get { return font_name; } }
         }
 
         public struct TEXTBOX_INFO
@@ -75,8 +84,10 @@ namespace CityBuilder.Interface
         {
             private int x, y, width, height;
             private Color color;
-            public UIBOX_INFO(float x_percent, float y_percent, float width_percent, float height_percent, Color color, int alpha = 255)
+            private string texture_name;
+            public UIBOX_INFO(string texture_name, float x_percent, float y_percent, float width_percent, float height_percent, Color color, int alpha = 255)
             {
+                this.texture_name = texture_name;
                 this.x = (int)(x_percent * Config.GAME_WIDTH);
                 this.y = (int)(y_percent * Config.GAME_HEIGHT);
                 this.width = (int)(width_percent * Config.GAME_WIDTH);
@@ -89,8 +100,9 @@ namespace CityBuilder.Interface
                 }
                 this.color = color;
             }
-            public UIBOX_INFO(int x, int y, int width, int height, Color color, int alpha = 255)
+            public UIBOX_INFO(string texture_name, int x, int y, int width, int height, Color color, int alpha = 255)
             {
+                this.texture_name = texture_name;
                 this.x = x;
                 this.y = y;
                 this.width = width;
@@ -104,8 +116,9 @@ namespace CityBuilder.Interface
                 this.color = color;
             }
 
-            public UIBOX_INFO(Color color, int alpha = 255)
+            public UIBOX_INFO(string texture_name, Color color, int alpha = 255)
             {
+                this.texture_name = texture_name;
                 this.x = 0;
                 this.y = 0;
                 this.width = 0;
@@ -123,6 +136,7 @@ namespace CityBuilder.Interface
             public int Width { get { return this.width; } }
             public int Height { get { return this.height; } }
             public Color Color { get { return color; } }
+            public string Texture_Name { get { return texture_name; } }
         }
 
         public struct BORDERBOX_INFO
@@ -306,23 +320,11 @@ namespace CityBuilder.Interface
         public static TEXTBOX_INFO RESOURCE_COUNTER_METAL = new TEXTBOX_INFO(Config.INITIAL_RESOURCE_VALUE_METAL.ToString(), TEXTBOX_TEXTCOLOR, 820, 200, 150, 40);
         public static TEXTBOX_INFO RESOURCE_LABEL_METAL = new TEXTBOX_INFO("METAL", TEXTBOX_TEXTCOLOR, 985, 200, 200, 40);
 
-        /*
-        public static BUTTON_INFO BUILDMODE_COMBATMODE = new BUTTON_INFO("Combat Mode", 0.625f, 0.825f, 0.25f, 0.125f);
+        public static BUTTON_INFO BUILD_SCROLLBOX_UP = new BUTTON_INFO("ButtonUp48x48", null, null, 1152, 400, 48, 48);
+        public static BUTTON_INFO BUILD_SCROLLBOX_DOWN = new BUTTON_INFO("ButtonDown48x48", null, null, 1152, 728, 48, 48);
+        public static UIBOX_INFO BUILD_SCROLLBOX_SLIDER = new UIBOX_INFO("Slider48x24", 1152, 450, 48, 24, Color.White);
+        public static UIBOX_INFO BUILD_SCROLLBOX = new UIBOX_INFO("ScrollBox384x384", 820, 396, 384, 384, Color.White);
 
-        private const float BUILDMODE_CANVAS_WIDTH = .38125f;
-        private const float BUILDMODE_CANVAS_HEIGHT = 0.6f;
-        private const float BUILDMODE_CANVAS_X = 0.5625f;
-        private const float BUILDMODE_CANVAS_Y = 0.2f;
-        private const float BUILDMODE_SHIP_RATIO = BUILDMODE_CANVAS_WIDTH * 20f / 64f;
-        private const float BUILDMODE_COMPONENT_RATIO = BUILDMODE_CANVAS_WIDTH * 27f / 64f;
-        private const float BUILDMODE_RESEARCH_RATIO = BUILDMODE_CANVAS_WIDTH * 16f / 64f;
-        private const float BUILDMODE_GAP_RATIO = (BUILDMODE_CANVAS_WIDTH - (BUILDMODE_SHIP_RATIO + BUILDMODE_COMPONENT_RATIO + BUILDMODE_RESEARCH_RATIO)) / 2;
-
-        public static BORDERBOX_INFO BUILDMODE_CANVAS = new BORDERBOX_INFO(3, Color.Black, BUILDMODE_CANVAS_X, BUILDMODE_CANVAS_Y, BUILDMODE_CANVAS_WIDTH, BUILDMODE_CANVAS_HEIGHT, 5);
-        #region SHIPBUILD
-        public static BUTTON_INFO BUILDMODE_ROOM = new BUTTON_INFO("Rooms", BUILDMODE_CANVAS_X, 0.125f, BUILDMODE_SHIP_RATIO, .06875f);
-        public static BUTTON_INFO SHIPBUILD_TEST = new BUTTON_INFO("View Ship", BUILDMODE_CANVAS_X + 0.05f, 0.25f, BUILDMODE_CANVAS_WIDTH - 0.1f, (BUILDMODE_CANVAS_WIDTH - 0.1f)/2);
-        //*/
         #endregion
         #region COMPONENTBUILD
         /*

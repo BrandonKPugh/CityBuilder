@@ -61,6 +61,8 @@ namespace CityBuilder
             SpriteFont buttonFont = Content.Load<SpriteFont>("DebugFont");
             BuildStateUI _toReturn = new BuildStateUI();
 
+
+            #region Resource Labels
             TextBox woodLabel = new TextBox(buttonFont);
             TextBox woodCount = new TextBox(buttonFont);
             woodLabel.TextBoxInfo = ControlConstants.RESOURCE_LABEL_WOOD;
@@ -96,6 +98,19 @@ namespace CityBuilder
             metalCount.TextAlignment = TextBox.TextAlign.Right;
             _toReturn.Add(metalLabel);
             _toReturn.Register(metalCount, GameCode.Resource.ResourceType.Metal);
+            #endregion
+
+            #region ScrollBox
+
+            UIBox scrollBox = new UIBox(Content, ControlConstants.BUILD_SCROLLBOX);
+            _toReturn.Add(scrollBox);
+            Button scrollBoxUpArrow = new Button(Content, ControlConstants.BUILD_SCROLLBOX_UP);
+            _toReturn.Add(scrollBoxUpArrow);
+            Button scrollBoxDownArrow = new Button(Content, ControlConstants.BUILD_SCROLLBOX_DOWN);
+            _toReturn.Add(scrollBoxDownArrow);
+
+
+            #endregion
 
             return _toReturn;
         }

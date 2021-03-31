@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -60,6 +61,17 @@ namespace CityBuilder.Interface
             PenColour = ControlConstants.BUTTON_PENCOLOR;
 
             BackColour = ControlConstants.BUTTON_BACKCOLOR;
+        }
+        public Button(ContentManager content, ControlConstants.BUTTON_INFO buttonInfo)
+        {
+            PenColour = ControlConstants.BUTTON_PENCOLOR;
+            BackColour = ControlConstants.BUTTON_BACKCOLOR;
+            this.ButtonInfo = buttonInfo;
+            this._texture = content.Load<Texture2D>(buttonInfo.Texture_Name);
+            if(buttonInfo.Font_Name != null)
+            {
+                this._font = content.Load<SpriteFont>(buttonInfo.Font_Name);
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
