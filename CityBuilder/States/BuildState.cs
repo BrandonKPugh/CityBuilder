@@ -25,6 +25,7 @@ namespace CityBuilder
             _ui = InitializeUI();
             _ui.Initialize(this.Data.Town);
             this.Data.Town.AddCards(_ui.ScrollBox);
+            this.Data.Town.SetResourceLabel = _ui.UpdateResourceCounts;
         }
 
         public override void LoadContent()
@@ -42,7 +43,9 @@ namespace CityBuilder
 
         public override void Update(GameTime gameTime)
         {
+            Data.Town.Update(gameTime);
             _ui.Update(gameTime);
+
         }
         public override void Draw(GameTime gameTime)
         {

@@ -55,12 +55,12 @@ namespace CityBuilder.Interface
             throw new NotImplementedException();
         }
 
-        public void AddCard(Structure.StructureType type, EventHandler Click)
+        public void AddCard(Structure.StructureType type)
         {
             if (cardTexture == null)
                 cardTexture = content.Load<Texture2D>(ControlConstants.STRUCTURE_CARD_TEXTURE);
             StructureCard newCard = new StructureCard(cardTexture);
-            newCard.Initialize(Click, this.town, type, NextCardPosition(), titleFont, resourceFont);
+            newCard.Initialize(this.town, type, NextCardPosition(), titleFont, resourceFont);
             structureCards.Add(newCard);
             this.Add(newCard);
         }

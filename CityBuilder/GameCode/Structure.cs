@@ -95,8 +95,10 @@ namespace CityBuilder
             {
                 case StructureType.House:
                     {
-                        cost.Add(Resource.ResourceType.Wood, 50);
+                        cost.Add(Resource.ResourceType.Wood, 500000);
                         cost.Add(Resource.ResourceType.Stone, 25);
+                        cost.Add(Resource.ResourceType.Ore, 10);
+                        cost.Add(Resource.ResourceType.Metal, 5);
                         break;
                     }
                 case StructureType.Warehouse:

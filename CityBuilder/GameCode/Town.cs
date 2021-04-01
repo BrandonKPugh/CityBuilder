@@ -10,9 +10,13 @@ namespace CityBuilder
 {
     public class Town
     {
+        public delegate bool SetResourceLabelMethod(Dictionary<Resource.ResourceType, int> resources);
+
         private SpriteSheet _spriteSheet;
         private List<Structure> _structures;
         private Dictionary<Resource.ResourceType, int> _resources;
+
+        public SetResourceLabelMethod SetResourceLabel;
 
         private bool _contentLoaded = false;
 
@@ -85,6 +89,15 @@ namespace CityBuilder
             {
                 structure.Update(gameTime);
             }
+            
+            if(SetResourceLabel == null)
+            {
+                throw new Exception("SetResourceLabelMethod not set!");
+            }
+            else
+            {
+                SetResourceLabel(_resources);
+            }
         }
 
         public void AddStructure(Structure structure)
@@ -120,12 +133,12 @@ namespace CityBuilder
                 {
                     case Structure.StructureType.House:
                         {
-                            scrollBox.AddCard(type, null);
+                            scrollBox.AddCard(type);
                             break;
                         }
                     case Structure.StructureType.Warehouse:
                         {
-                            scrollBox.AddCard(type, null);
+                            scrollBox.AddCard(type);
                             break;
                         }
                     default:
@@ -136,9 +149,39 @@ namespace CityBuilder
             }
         }
 
-        private EventHandler BeginStructurePlacement(Structure.StructureType type)
+        public void BeginStructurePlacement(Structure.StructureType type)
         {
             throw new NotImplementedException();
+        }
+
+        public void SetResourceCount(Resource.ResourceType type, int count)
+        {
+            if (_resources.ContainsKey(type))
+            {
+                if (_resources[type] + count > Config.MAX_RESOURCE_VALUE)
+                    _resources[type] = Config.MAX_RESOURCE_VALUE;
+                else
+                    _resources[type] = count;
+            }
+            else
+            {
+                throw new NotImplementedException("That resource type does not exist");
+            }
+        }
+
+        public void AddResourceToCount(Resource.ResourceType type, int count)
+        {
+            if (_resources.ContainsKey(type))
+            {
+                if (_resources[type] + count > Config.MAX_RESOURCE_VALUE)
+                    _resources[type] = Config.MAX_RESOURCE_VALUE;
+                else
+                    _resources[type] = count;
+            }
+            else
+            {
+                throw new NotImplementedException("That resource type does not exist");
+            }
         }
     }
 }

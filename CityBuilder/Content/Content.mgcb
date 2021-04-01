@@ -131,6 +131,20 @@
 /processorParam:TextureFormat=Color
 /build:StructureCard.png
 
+#begin StructureCardResourceFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:StructureCardResourceFont.spritefont
+
+#begin StructureCardTitleFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:StructureCardTitleFont.spritefont
+
 #begin Transparent.png
 /importer:TextureImporter
 /processor:TextureProcessor

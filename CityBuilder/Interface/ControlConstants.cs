@@ -293,16 +293,26 @@ namespace CityBuilder.Interface
         public static UIBOX_INFO BUILD_SCROLLBOX = new UIBOX_INFO("ScrollBox384x384", 820, 396, 384, 384, Color.White);
 
         public static Color STRUCTURE_CARD_PLACEABLE = Color.White;
-        public static Color STRUCTURE_CARD_NOT_PLACEABLE = Color.Gray;
-        
+        public static Color STRUCTURE_CARD_NOT_PLACEABLE = new Color(255, 50, 50, 150);
+        public static Color STRUCTURE_CARD_HOVER_COLOR = new Color(50, 50, 255, 150);
+
+
         public static Vector2 STRUCTURE_CARD_SIZE = new Vector2(326, 188);
         public static Vector2 STRUCTURE_CARD_POSITION = new Vector2(4, 4);
-        public static Vector2 STRUCTURE_CARD_TITLE_SIZE = new Vector2(314, 48);
-        public static Vector2 STRUCTURE_CARD_TITLE_POSITION = new Vector2(6, 6);
-        public static string STRUCTURE_CARD_TITLE_FONT = "DebugFont";
+        public static Vector2 STRUCTURE_CARD_TITLE_SIZE = new Vector2(304, 48);
+        public static Vector2 STRUCTURE_CARD_TITLE_POSITION = new Vector2(16, 6);
+        public static string STRUCTURE_CARD_TITLE_FONT = "StructureCardTitleFont";
         public static Color STRUCTURE_CARD_TITLE_COLOR = Color.Black;
-        public static string STRUCTURE_CARD_RESOURCE_FONT = "DebugFont";
+        public static string STRUCTURE_CARD_RESOURCE_FONT = "StructureCardResourceFont";
         public static string STRUCTURE_CARD_TEXTURE = "StructureCard";
+
+        public static Vector2 STRUCTURE_CARD_RESOURCE_LABEL_POSITION = new Vector2(138, 58);
+        public static Vector2 STRUCTURE_CARD_RESOURCE_COUNT_POSITION = new Vector2(6, 58);
+        public static Vector2 STRUCTURE_CARD_RESOURCE_LABEL_OFFSET = new Vector2(0, 32);
+        public static Vector2 STRUCTURE_CARD_RESOURCE_LABEL_SIZE = new Vector2(182, 28);
+        public static Vector2 STRUCTURE_CARD_RESOURCE_COUNT_SIZE = new Vector2(120, 28);
+        public static Color STRUCTURE_CARD_RESOURCE_LABEL_COLOR = Color.Black;
+        public static Color STRUCTURE_CARD_RESOURCE_COUNT_COLOR = Color.Black;
 
         #endregion
     }

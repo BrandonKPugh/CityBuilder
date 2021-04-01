@@ -20,6 +20,8 @@ namespace CityBuilder.Interface
 
         protected bool _isHovering;
 
+        protected Color _hoverColor;
+
         protected MouseState _previousMouse;
 
         protected Texture2D _texture;
@@ -55,6 +57,7 @@ namespace CityBuilder.Interface
         public Button()
         {
 
+            _hoverColor = new Color((int)(BackColour.R * .50f), (int)(BackColour.G * .50f), (int)(BackColour.B * .50f), (int)BackColour.A);
         }
         public Button(Texture2D texture, SpriteFont font)
         {
@@ -65,6 +68,7 @@ namespace CityBuilder.Interface
             PenColour = ControlConstants.BUTTON_PENCOLOR;
 
             BackColour = ControlConstants.BUTTON_BACKCOLOR;
+            _hoverColor = new Color((int)(BackColour.R * .50f), (int)(BackColour.G * .50f), (int)(BackColour.B * .50f), (int)BackColour.A);
         }
         public Button(ContentManager content, ControlConstants.BUTTON_INFO buttonInfo)
         {
@@ -76,15 +80,17 @@ namespace CityBuilder.Interface
             {
                 this._font = content.Load<SpriteFont>(buttonInfo.Font_Name);
             }
+
+            _hoverColor = new Color((int)(BackColour.R * .50f), (int)(BackColour.G * .50f), (int)(BackColour.B * .50f), (int)BackColour.A);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Color colour = BackColour;
-            if (_isHovering || !IsActive)
-                colour = new Color((int) (colour.R * .50f), (int)(colour.G * .50f), (int)(colour.B * .50f), (int)colour.A);
+            Color color = BackColour;
+            if (_isHovering && IsActive)
+                color = _hoverColor;
 
-            spriteBatch.Draw(_texture, Location, colour);
+            spriteBatch.Draw(_texture, Location, color);
 
             if (!string.IsNullOrEmpty(Text))
             {
