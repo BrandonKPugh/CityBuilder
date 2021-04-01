@@ -9,6 +9,7 @@ namespace CityBuilder
     public class Structure : Object
     {
         public StructureData Data;
+        protected Grid _grid;
 
         public enum StructureType
         {
@@ -65,7 +66,16 @@ namespace CityBuilder
 
         public Structure(Grid buildGrid, StructureData data)
         {
-            RectangleBody rect = new RectangleBody(buildGrid.TileToPixelRect(data.X1, data.Y1));
+            this._grid = buildGrid;
+            RectangleBody rect;
+            if (data.X1 < 0 || data.Y1 < 0)
+            {
+                rect = new RectangleBody(buildGrid.TileToPixelRect(0, 0));
+                rect.Position.X = -10000;
+                rect.Position.Y = -10000;
+            }
+            else
+                rect = new RectangleBody(buildGrid.TileToPixelRect(data.X1, data.Y1));
             this.Collision = rect;
             rect.Size = new Vector2(rect.Region().Width * data.Width, rect.Region().Height * data.Height);
             this.Data = data;
@@ -124,7 +134,7 @@ namespace CityBuilder
                     }
                 case StructureType.Warehouse:
                     {
-                        return new StructureSize(2, 2);
+                        return new StructureSize(2, 3);
                     }
                 default:
                     {

@@ -160,7 +160,7 @@ namespace CityBuilder
 
         public void BeginStructurePlacement(Structure.StructureType type)
         {
-            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), 0, 0));
+            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), -1, -1));
             LoadStructureContent(_ghostStructure);
         }
 
