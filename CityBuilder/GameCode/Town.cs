@@ -150,6 +150,12 @@ namespace CityBuilder
                             scrollBox.AddCard(type);
                             break;
                         }
+                    case Structure.StructureType.Other:
+                        {
+                            // Don't add a card for Other
+                            //scrollBox.AddCard(type);
+                            break;
+                        }
                     default:
                         {
                             throw new NotImplementedException("Structure Type: " + type.ToString() + " not defined!");
@@ -160,8 +166,62 @@ namespace CityBuilder
 
         public void BeginStructurePlacement(Structure.StructureType type)
         {
-            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), -1, -1));
+            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), -1, -1), this);
             LoadStructureContent(_ghostStructure);
+        }
+
+        public bool FinalizeStructurePlacement(Structure structure, int tileX, int tileY)
+        {
+            if(ValidStructurePlacementLocation(structure, tileX, tileY))
+            {
+                _ghostStructure = null;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidStructurePlacementLocation(Structure structure, int tileX, int tileY)
+        {
+            Structure.StructureSize size = Structure.GetStructureSize(structure);
+            for(int y = tileY; y < tileY + size.Height; y++)
+            {
+                for(int x = tileX; x < tileX + size.Width; x++)
+                {
+                    if (IsStructureUnderTile(x, y))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            return true;
+            
+        }
+
+        private bool IsStructureUnderTile(int tileX, int tileY)
+        {
+            if (GetStructureUnderTile(tileX, tileY) == null)
+                return false;
+            else
+                return true;
+        }
+
+        private Structure GetStructureUnderTile(int tileX, int tileY)
+        {
+            foreach (Structure structure in _structures)
+            {
+                if (structure.Data.X1 <= tileX && structure.Data.X2 >= tileX && structure.Data.Y1 <= tileY && structure.Data.Y2 >= tileY)
+                {
+                    return structure;
+                }
+            }
+            return null;
         }
 
         public void SetResourceCount(Resource.ResourceType type, int count)

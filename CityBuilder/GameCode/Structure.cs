@@ -14,7 +14,8 @@ namespace CityBuilder
         public enum StructureType
         {
             House,
-            Warehouse
+            Warehouse,
+            Other
         }
 
         public struct StructureSize
@@ -30,25 +31,28 @@ namespace CityBuilder
 
         public struct StructureData
         {
-            public StructureData(int width, int height, int x1, int y1)
+            public StructureData(int width, int height, int x1, int y1, StructureType type = StructureType.Other)
             {
                 this.Size = new StructureSize(width, height);
                 this.X1 = x1;
                 this.Y1 = y1;
                 Cost = new Dictionary<Resource.ResourceType, int>();
+                this.Type = type;
             }
-            public StructureData(StructureSize size, int x1, int y1)
+            public StructureData(StructureSize size, int x1, int y1, StructureType type = StructureType.Other)
             {
                 this.Size = size;
                 this.X1 = x1;
                 this.Y1 = y1;
                 Cost = new Dictionary<Resource.ResourceType, int>();
+                this.Type = type;
             }
             public StructureSize Size;
+            public StructureType Type;
             public int X1;
             public int Y1;
             public int X2 { get { return X1 + Size.Width - 1; } }
-            public int Y2 { get { return Y1 = Size.Height - 1; } }
+            public int Y2 { get { return Y1 + Size.Height - 1; } }
             public int Height { get { return Size.Height; } }
             public int Width { get { return Size.Width; } }
             public Dictionary<Resource.ResourceType, int> Cost;
@@ -124,9 +128,14 @@ namespace CityBuilder
             return cost;
         }
 
+        public static StructureSize GetStructureSize(Structure structure)
+        {
+            return structure.Data.Size;
+        }
+
         public static StructureSize GetStructureDefaultSize(StructureType structureType)
         {
-            switch(structureType)
+            switch (structureType)
             {
                 case StructureType.House:
                     {

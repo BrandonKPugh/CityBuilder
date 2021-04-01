@@ -8,13 +8,14 @@ namespace CityBuilder.Interface
 {
     class GhostStructure : Structure
     {
+        private Town _town;
 
-        public GhostStructure(Grid buildGrid, StructureData data) : base(buildGrid, data)
+        public GhostStructure(Grid buildGrid, StructureData data, Town town) : base(buildGrid, data)
         {
-
+            this._town = town;
         }
 
-        public new void Update(GameTime gameTim)
+        public new void Update(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
             RectangleBody mouseCollision = new RectangleBody(mouseState.Position.ToVector2(), new Vector2(0, 0));
@@ -36,6 +37,13 @@ namespace CityBuilder.Interface
                     Rectangle loc = _grid.TileToPixelRect(tileX, tileY);
                     loc.Size = new Vector2(loc.Width * Data.Width, loc.Height * Data.Height).ToPoint();
                     this.Collision = new RectangleBody(loc);
+
+                    if (mouseState.LeftButton.HasFlag(ButtonState.Pressed))
+                    {
+                        this.Data.X1 = tileX;
+                        this.Data.Y1 = tileY;
+                        _town.FinalizeStructurePlacement(this, tileX, tileY);
+                    }
                 }
             }
             else
