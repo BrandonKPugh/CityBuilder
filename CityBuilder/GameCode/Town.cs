@@ -193,5 +193,10 @@ namespace CityBuilder
                 throw new NotImplementedException("That resource type does not exist");
             }
         }
+
+        public  void CancelPlacementButton_Click(object sender, EventArgs e)
+        {
+            _ghostStructure = null;
+        }
     }
 }

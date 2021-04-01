@@ -113,6 +113,17 @@ namespace CityBuilder
 
             #endregion
 
+            #region Cancel Button
+
+            Button cancelButton = new Button(Content, ControlConstants.CANCEL_BUTTON_INFO);
+            cancelButton.BackColour = ControlConstants.CANCEL_BUTTON_COLOR;
+            cancelButton.HoverColour = ControlConstants.CANCEL_BUTTON_HOVER_COLOR;
+            cancelButton.Click += Data.Town.CancelPlacementButton_Click;
+            newBuildStateUI.Add(cancelButton);
+
+
+            #endregion
+
             return newBuildStateUI;
         }
 

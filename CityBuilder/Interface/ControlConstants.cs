@@ -314,6 +314,11 @@ namespace CityBuilder.Interface
         public static Color STRUCTURE_CARD_RESOURCE_LABEL_COLOR = Color.Black;
         public static Color STRUCTURE_CARD_RESOURCE_COUNT_COLOR = Color.Black;
 
+        public static BUTTON_INFO CANCEL_BUTTON_INFO = new BUTTON_INFO("Cancel", "DebugFont", "", 820 + 384 + 4, 396 + 384 - 48, 48, 48);
+        public static Color CANCEL_BUTTON_COLOR = new Color(155, 0, 0, 255);
+        public static Color CANCEL_BUTTON_HOVER_COLOR = new Color(255, 20, 20, 255);
+
+
         #endregion
     }
 }

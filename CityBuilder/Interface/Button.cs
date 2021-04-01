@@ -36,6 +36,7 @@ namespace CityBuilder.Interface
 
         public Color PenColour { get; set; }
         public Color BackColour { get; set; }
+        public Color HoverColour { get { return _hoverColor; } set { _hoverColor = value; } }
         public bool IsActive = true;
 
         public ControlConstants.BUTTON_INFO ButtonInfo { set { Position = new Vector2(value.X, value.Y); Size = new Vector2(value.Width, value.Height); Text = value.Text; } }
