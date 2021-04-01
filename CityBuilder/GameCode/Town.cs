@@ -210,8 +210,15 @@ namespace CityBuilder
                     }
                 }
             }
-            return true;
-            
+            // We now know that the structure doesn't overlap any previous structures, but still need to check the bounds of the grid.
+            if (tileX >= 0 && tileX + size.Width <= _grid.Info.TilesWide && tileY >= 0 && tileY + size.Height <= _grid.Info.TilesHigh)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private bool IsStructureUnderTile(int tileX, int tileY)

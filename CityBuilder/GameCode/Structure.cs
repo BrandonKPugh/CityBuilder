@@ -143,7 +143,7 @@ namespace CityBuilder
                     }
                 case StructureType.Warehouse:
                     {
-                        return new StructureSize(2, 3);
+                        return new StructureSize(2, 2);
                     }
                 default:
                     {
