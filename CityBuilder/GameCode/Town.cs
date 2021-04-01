@@ -118,9 +118,16 @@ namespace CityBuilder
             }
         }
 
-        public void LoadStructureContent(Structure structure)
+        public void LoadStructureContent(Structure structure, bool isGhost = false)
         {
-            structure.LoadContent(_spriteSheet.GetSprite("structure-" + structure.Data.Width + 'x' + structure.Data.Height));
+            Sprite newSprite = _spriteSheet.GetSprite("structure-" + structure.Data.Width + 'x' + structure.Data.Height);
+            if(isGhost)
+            {
+                Sprite ghostCopy = newSprite.Copy();
+                ghostCopy.TextureColor = ControlConstants.GHOST_STRUCTURE_COLOR;
+                newSprite = ghostCopy;
+            }
+            structure.LoadContent(newSprite);
         }
 
         public bool CanCreateStructure(Structure.StructureType structureType)
@@ -167,13 +174,16 @@ namespace CityBuilder
         public void BeginStructurePlacement(Structure.StructureType type)
         {
             _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), -1, -1), this);
-            LoadStructureContent(_ghostStructure);
+            LoadStructureContent(_ghostStructure, true);
         }
 
         public bool FinalizeStructurePlacement(Structure structure, int tileX, int tileY)
         {
-            if(ValidStructurePlacementLocation(structure, tileX, tileY))
+            if (ValidStructurePlacementLocation(structure, tileX, tileY))
             {
+                Structure newPlacedStructure = _ghostStructure.ToStructure();
+                LoadStructureContent(newPlacedStructure, false);
+                _structures.Add(newPlacedStructure);
                 _ghostStructure = null;
                 return true;
             }

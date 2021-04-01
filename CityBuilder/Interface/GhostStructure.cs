@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,23 @@ namespace CityBuilder.Interface
             {
                 this.Collision.Position = mouseState.Position.ToVector2() - (this.Collision.Region().Size.ToVector2() / 2);
             }
+        }
+
+        /*
+        public new void Draw(SpriteBatch spriteBatch)
+        {
+            Color old = this.Sprite.TextureColor;
+            this.Sprite.TextureColor = ControlConstants.GHOST_STRUCTURE_COLOR;
+            this.Sprite.Draw(spriteBatch, Collision.Region());
+            this.Sprite.TextureColor = old;
+        }
+        */
+
+        public Structure ToStructure()
+        {
+            Structure copy = this;
+            //copy.Sprite.TextureColor = Structure.GetStructureColor(Data.Type);
+            return copy;
         }
     }
 }

@@ -39,6 +39,18 @@ namespace CityBuilder
             //AnimationSpeed = 0.5f;
         }
 
+        private Sprite(Sprite oldSprite)
+        {
+            spriteSheet = oldSprite.spriteSheet;
+            PixelWidth = oldSprite.PixelWidth;
+            PixelHeight = oldSprite.PixelHeight;
+            columns = oldSprite.columns;
+            rows = oldSprite.rows;
+            sheetIndex = oldSprite.sheetIndex;
+            flip = oldSprite.flip;
+            this.LoadContent();
+        }
+
         public void Draw(SpriteBatch spriteBatch, Rectangle destination)
         {
             List<Rectangle> sources = sourceRects[0];
@@ -141,6 +153,11 @@ namespace CityBuilder
                 }
             }
             */
+        }
+
+        public Sprite Copy()
+        {
+            return new Sprite(this);
         }
 
         public int Frames

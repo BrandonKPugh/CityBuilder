@@ -318,6 +318,8 @@ namespace CityBuilder.Interface
         public static Color CANCEL_BUTTON_COLOR = new Color(155, 0, 0, 255);
         public static Color CANCEL_BUTTON_HOVER_COLOR = new Color(255, 20, 20, 255);
 
+        public static Color GHOST_STRUCTURE_COLOR = new Color(150, 150, 150, 100);
+
 
         #endregion
     }
