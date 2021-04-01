@@ -11,16 +11,14 @@ namespace CityBuilder
 {
     public class Object
     {
-        public Game1 Game;
         public CollisionBody Collision;
         public Vector2 Velocity;
         public Vector2 Acceleration;
         public Sprite Sprite;
 
         public Object() { }
-        public Object(Game1 game, CollisionBody collision)
+        public Object(CollisionBody collision)
         {
-            Game = game;
             Collision = collision;
             Collision.Parent = this;
 

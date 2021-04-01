@@ -15,15 +15,18 @@ namespace CityBuilder
         private SpriteSheet _spriteSheet;
         private List<Structure> _structures;
         private Dictionary<Resource.ResourceType, int> _resources;
+        private Grid _grid;
+        private GhostStructure _ghostStructure;
 
         public SetResourceLabelMethod SetResourceLabel;
 
         private bool _contentLoaded = false;
 
-        public Town()
+        public Town(Grid grid)
         {
             _structures = new List<Structure>();
             _resources = new Dictionary<Resource.ResourceType, int>();
+            this._grid = grid;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -31,6 +34,10 @@ namespace CityBuilder
             foreach (Structure structure in _structures)
             {
                 structure.Draw(spriteBatch);
+            }
+            if(_ghostStructure != null)
+            {
+                _ghostStructure.Draw(spriteBatch);
             }
         }
 
@@ -89,6 +96,8 @@ namespace CityBuilder
             {
                 structure.Update(gameTime);
             }
+            if (_ghostStructure != null)
+                _ghostStructure.Update(gameTime);
             
             if(SetResourceLabel == null)
             {
@@ -151,7 +160,8 @@ namespace CityBuilder
 
         public void BeginStructurePlacement(Structure.StructureType type)
         {
-            throw new NotImplementedException();
+            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), 0, 0));
+            LoadStructureContent(_ghostStructure);
         }
 
         public void SetResourceCount(Resource.ResourceType type, int count)

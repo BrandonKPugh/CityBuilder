@@ -120,7 +120,7 @@ namespace CityBuilder
         {
             Grid buildGrid = new Grid(Config.BUILD_GRID);
 
-            Town town = new Town();
+            Town town = new Town(buildGrid);
 
             List<Structure.StructureData> structureDataList = new List<Structure.StructureData>();
 
@@ -137,7 +137,7 @@ namespace CityBuilder
 
             foreach (Structure.StructureData data in structureDataList)
             {
-                Structure testStructure = new Structure(Game, buildGrid, data);
+                Structure testStructure = new Structure(buildGrid, data);
                 town.AddStructure(testStructure);
             }
 

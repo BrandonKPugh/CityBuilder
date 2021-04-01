@@ -53,7 +53,7 @@ namespace CityBuilder
             public Dictionary<Resource.ResourceType, int> Cost;
         }
 
-        public Structure(Game1 game, CollisionBody collision, StructureData data) : base(game, collision)
+        public Structure(CollisionBody collision, StructureData data) : base(collision)
         {
             this.Data = data;
             if(collision.Shape == CollisionBody.ShapeType.Rectangle)
@@ -63,14 +63,13 @@ namespace CityBuilder
             }
         }
 
-        public Structure(Game1 game, Grid buildGrid, StructureData data)
+        public Structure(Grid buildGrid, StructureData data)
         {
             RectangleBody rect = new RectangleBody(buildGrid.TileToPixelRect(data.X1, data.Y1));
             this.Collision = rect;
             rect.Size = new Vector2(rect.Region().Width * data.Width, rect.Region().Height * data.Height);
             this.Data = data;
 
-            Game = game;
             Collision = rect;
             Collision.Parent = this;
 
@@ -95,7 +94,7 @@ namespace CityBuilder
             {
                 case StructureType.House:
                     {
-                        cost.Add(Resource.ResourceType.Wood, 500000);
+                        cost.Add(Resource.ResourceType.Wood, 100);
                         cost.Add(Resource.ResourceType.Stone, 25);
                         cost.Add(Resource.ResourceType.Ore, 10);
                         cost.Add(Resource.ResourceType.Metal, 5);
@@ -113,6 +112,25 @@ namespace CityBuilder
                     }
             }
             return cost;
+        }
+
+        public static StructureSize GetStructureDefaultSize(StructureType structureType)
+        {
+            switch(structureType)
+            {
+                case StructureType.House:
+                    {
+                        return new StructureSize(1, 1);
+                    }
+                case StructureType.Warehouse:
+                    {
+                        return new StructureSize(2, 2);
+                    }
+                default:
+                    {
+                        throw new NotImplementedException("That structure type does not have a size!");
+                    }
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CityBuilder
 {
     public class ElasticObject : Object
     {
-        public ElasticObject(Game1 game, CollisionBody collision) : base(game, collision)
+        public ElasticObject(CollisionBody collision) : base(collision)
         {
         }
 
