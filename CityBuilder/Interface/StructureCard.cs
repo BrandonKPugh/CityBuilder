@@ -40,7 +40,7 @@ namespace CityBuilder.Interface
             title.Color = ControlConstants.STRUCTURE_CARD_TITLE_COLOR;
             title.TextAlignment = TextBox.TextAlign.Left;
 
-            Dictionary<Resource.ResourceType, int> structureCost = Structure.GetStructureCost(type);
+            Dictionary<Resource.ResourceType, int> structureCost = Structure.GetStructureCostByType(type);
             Vector2 nextCountPos = this.Position + ControlConstants.STRUCTURE_CARD_RESOURCE_COUNT_POSITION;
             Vector2 nextLabelPos = this.Position + ControlConstants.STRUCTURE_CARD_RESOURCE_LABEL_POSITION;
             foreach (Resource.ResourceType resource in structureCost.Keys)
@@ -82,7 +82,7 @@ namespace CityBuilder.Interface
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (town.CanCreateStructure(StructureType))
+            if (town.CanCreateStructureByType(StructureType))
             {
                 this.BackColour = ControlConstants.STRUCTURE_CARD_PLACEABLE;
                 this.IsActive = true;

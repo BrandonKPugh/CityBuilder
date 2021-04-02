@@ -43,7 +43,7 @@ namespace CityBuilder.Interface
                     {
                         this.Data.X1 = tileX;
                         this.Data.Y1 = tileY;
-                        _town.FinalizeStructurePlacement(this, tileX, tileY);
+                        _town.FinalizeStructurePlacement(this.ToStructure(), tileX, tileY);
                     }
                 }
             }
@@ -67,7 +67,13 @@ namespace CityBuilder.Interface
         {
             Structure copy = this;
             //copy.Sprite.TextureColor = Structure.GetStructureColor(Data.Type);
-            return copy;
+            if(copy.Data.Cost != null && copy.Data.Cost.Count > 0)
+                return copy;
+            else
+            {
+                copy.Data.Cost = Structure.GetStructureCostByType(copy.Data.Type);
+                return copy;
+            }
         }
     }
 }

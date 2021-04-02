@@ -41,7 +41,7 @@ namespace CityBuilder.Interface
             }
         }
 
-        public bool UpdateResourceCounts(Dictionary<Resource.ResourceType, int> resources)
+        public bool UpdateResourceCounts(Dictionary<Resource.ResourceType, float> resources)
         {
             bool error = false;
             if (resources == null)
@@ -50,7 +50,7 @@ namespace CityBuilder.Interface
             {
                 if (_resourceTextBoxes.ContainsKey(type))
                 {
-                    int value = resources[type];
+                    int value = (int)resources[type];
                     if (value > Config.MAX_RESOURCE_VALUE)
                         value = Config.MAX_RESOURCE_VALUE;
                     if (!resourcesCounts.ContainsKey(type))

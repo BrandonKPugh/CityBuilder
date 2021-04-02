@@ -10,11 +10,11 @@ namespace CityBuilder
 {
     public class Town
     {
-        public delegate bool SetResourceLabelMethod(Dictionary<Resource.ResourceType, int> resources);
+        public delegate bool SetResourceLabelMethod(Dictionary<Resource.ResourceType, float> resources);
 
         private SpriteSheet _spriteSheet;
         private List<Structure> _structures;
-        private Dictionary<Resource.ResourceType, int> _resources;
+        private Dictionary<Resource.ResourceType, float> _resources;
         private Grid _grid;
         private GhostStructure _ghostStructure;
 
@@ -25,7 +25,7 @@ namespace CityBuilder
         public Town(Grid grid)
         {
             _structures = new List<Structure>();
-            _resources = new Dictionary<Resource.ResourceType, int>();
+            _resources = new Dictionary<Resource.ResourceType, float>();
             this._grid = grid;
         }
 
@@ -92,6 +92,8 @@ namespace CityBuilder
 
         public void Update(GameTime gameTime)
         {
+            Calculate();
+
             foreach (Structure structure in _structures)
             {
                 structure.Update(gameTime);
@@ -106,6 +108,25 @@ namespace CityBuilder
             else
             {
                 SetResourceLabel(_resources);
+            }
+        }
+
+        private void Calculate()
+        {
+            foreach(Structure structure in _structures)
+            {
+                if(structure.Data.Type == Structure.StructureType.House)
+                {
+                    _resources[Resource.ResourceType.Wood] += 0.1f;
+                    _resources[Resource.ResourceType.Metal] += 0.01f;
+                }
+
+
+                if (structure.Data.Type == Structure.StructureType.Warehouse)
+                {
+                    _resources[Resource.ResourceType.Ore] += 0.02f;
+                    _resources[Resource.ResourceType.Stone] += 0.04f;
+                }
             }
         }
 
@@ -130,10 +151,21 @@ namespace CityBuilder
             structure.LoadContent(newSprite);
         }
 
-        public bool CanCreateStructure(Structure.StructureType structureType)
+        public bool CanCreateStructure(Structure structure)
         {
-            Dictionary<Resource.ResourceType, int> cost = Structure.GetStructureCost(structureType);
+            Dictionary<Resource.ResourceType, int> cost = Structure.GetStructureCost(structure);
             foreach(Resource.ResourceType type in cost.Keys)
+            {
+                if (_resources[type] < cost[type])
+                    return false;
+            }
+            return true;
+        }
+
+        public bool CanCreateStructureByType(Structure.StructureType structureType)
+        {
+            Dictionary<Resource.ResourceType, int> cost = Structure.GetStructureCostByType(structureType);
+            foreach (Resource.ResourceType type in cost.Keys)
             {
                 if (_resources[type] < cost[type])
                     return false;
@@ -173,7 +205,7 @@ namespace CityBuilder
 
         public void BeginStructurePlacement(Structure.StructureType type)
         {
-            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), -1, -1), this);
+            _ghostStructure = new GhostStructure(_grid, new Structure.StructureData(Structure.GetStructureDefaultSize(type), -1, -1, type), this);
             LoadStructureContent(_ghostStructure, true);
         }
 
@@ -181,6 +213,7 @@ namespace CityBuilder
         {
             if (ValidStructurePlacementLocation(structure, tileX, tileY))
             {
+                TakeStructureCost(structure);
                 Structure newPlacedStructure = _ghostStructure.ToStructure();
                 LoadStructureContent(newPlacedStructure, false);
                 _structures.Add(newPlacedStructure);
@@ -193,8 +226,28 @@ namespace CityBuilder
             }
         }
 
+        private void TakeStructureCost(Structure structure)
+        {
+            Dictionary<Resource.ResourceType, int> cost = structure.Data.Cost;
+            if (cost == null)
+                cost = Structure.GetStructureCostByType(structure.Data.Type);
+            foreach (Resource.ResourceType resourceType in cost.Keys)
+            {
+                try
+                {
+                    _resources[resourceType] -= cost[resourceType];
+                }
+                catch
+                {
+                    throw new Exception("Invalid resource type in Structure cost. Town does not contain reference to resource: " + resourceType.ToString());
+                }
+            }
+        }
+
         private bool ValidStructurePlacementLocation(Structure structure, int tileX, int tileY)
         {
+            if (!CanCreateStructure(structure))
+                return false;
             Structure.StructureSize size = Structure.GetStructureSize(structure);
             for(int y = tileY; y < tileY + size.Height; y++)
             {

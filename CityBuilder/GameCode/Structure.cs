@@ -101,10 +101,10 @@ namespace CityBuilder
             throw new NotImplementedException();
         }
 
-        public static Dictionary<Resource.ResourceType, int> GetStructureCost(StructureType structureType)
+        public static Dictionary<Resource.ResourceType, int> GetStructureCostByType(Structure.StructureType structureType)
         {
             Dictionary<Resource.ResourceType, int> cost = new Dictionary<Resource.ResourceType, int>();
-            switch(structureType)
+            switch (structureType)
             {
                 case StructureType.House:
                     {
@@ -126,6 +126,16 @@ namespace CityBuilder
                     }
             }
             return cost;
+        }
+
+        public static Dictionary<Resource.ResourceType, int> GetStructureCost(Structure structure)
+        {
+            if (structure.Data.Cost != null)
+                return structure.Data.Cost;
+            else
+            {
+                return GetStructureCostByType(structure.Data.Type);
+            }
         }
 
         public static StructureSize GetStructureSize(Structure structure)
