@@ -49,7 +49,7 @@ namespace CityBuilder
         }
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkOliveGreen);
+            GraphicsDevice.Clear(Color.OliveDrab);
 
             Data.Grid.Draw(SpriteBatch);
 
