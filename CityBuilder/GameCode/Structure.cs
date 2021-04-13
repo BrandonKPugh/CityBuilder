@@ -1,5 +1,6 @@
 ﻿using CityBuilder.GameCode;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,16 @@ namespace CityBuilder
         {
             House,
             Warehouse,
+            Lumbermill,
             Other
+        }
+
+        public enum Rotation
+        {
+            Normal, 
+            Right,
+            Half,
+            Left
         }
 
         public struct StructureSize
@@ -36,21 +46,24 @@ namespace CityBuilder
                 this.Size = new StructureSize(width, height);
                 this.X1 = x1;
                 this.Y1 = y1;
-                Cost = new Dictionary<Resource.ResourceType, int>();
+                this.Cost = new Dictionary<Resource.ResourceType, int>();
                 this.Type = type;
+                this.Rotation = Rotation.Normal;
             }
             public StructureData(StructureSize size, int x1, int y1, StructureType type = StructureType.Other)
             {
                 this.Size = size;
                 this.X1 = x1;
                 this.Y1 = y1;
-                Cost = new Dictionary<Resource.ResourceType, int>();
+                this.Cost = new Dictionary<Resource.ResourceType, int>();
                 this.Type = type;
+                this.Rotation = Rotation.Normal;
             }
             public StructureSize Size;
             public StructureType Type;
             public int X1;
             public int Y1;
+            public Rotation Rotation;
             public int X2 { get { return X1 + Size.Width - 1; } }
             public int Y2 { get { return Y1 + Size.Height - 1; } }
             public int Height { get { return Size.Height; } }
@@ -93,12 +106,23 @@ namespace CityBuilder
 
         public void RotateRight()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Function not complete");
+            /*
+            this.Data.Rotation++;
+            if (this.Data.Rotation > Rotation.Left)
+                this.Data.Rotation = Rotation.Normal;
+            //*/
         }
 
         public void RotateLeft()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Function not complete");
+            /*
+            this.Data.Rotation--;
+
+            if (this.Data.Rotation < Rotation.Normal)
+                this.Data.Rotation = Rotation.Right;
+            //*/
         }
 
         public static Dictionary<Resource.ResourceType, int> GetStructureCostByType(Structure.StructureType structureType)
@@ -118,6 +142,12 @@ namespace CityBuilder
                     {
                         cost.Add(Resource.ResourceType.Wood, 400);
                         cost.Add(Resource.ResourceType.Stone, 150);
+                        break;
+                    }
+                case StructureType.Lumbermill:
+                    {
+                        cost.Add(Resource.ResourceType.Stone, 200);
+                        cost.Add(Resource.ResourceType.Ore, 10);
                         break;
                     }
                 default:
@@ -155,11 +185,49 @@ namespace CityBuilder
                     {
                         return new StructureSize(2, 2);
                     }
+                case StructureType.Lumbermill:
+                    {
+                        return new StructureSize(4, 2);
+                    }
                 default:
                     {
                         throw new NotImplementedException("That structure type does not have a size!");
                     }
             }
+        }
+
+        public new void Draw(SpriteBatch spriteBatch)
+        {
+            float rotation = ((int)Data.Rotation) * ((float)Math.PI / 2f);
+
+            Rectangle dest = Collision.Region();
+            if (Data.Rotation != Rotation.Normal)
+            {
+                switch(Data.Rotation)
+                {
+                    case Rotation.Right:
+                        {
+                            dest = new Rectangle(dest.X, dest.Y, dest.Height, dest.Width);
+                            break;
+                        }
+                    case Rotation.Half:
+                        {
+                            dest = new Rectangle(dest.X, dest.Y, dest.Width, dest.Height);
+                            break;
+                        }
+                    case Rotation.Left:
+                        {
+                            dest = new Rectangle(dest.X, dest.Y, dest.Height, dest.Width);
+                            break;
+                        }
+                    default:
+                        {
+                            throw new Exception("Rotation does not exist!");
+                        }
+                }
+            }
+            this.Sprite.Draw(spriteBatch, Collision.Region(), rotation);
+
         }
     }
 }

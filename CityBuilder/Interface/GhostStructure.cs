@@ -51,6 +51,17 @@ namespace CityBuilder.Interface
             {
                 this.Collision.Position = mouseState.Position.ToVector2() - (this.Collision.Region().Size.ToVector2() / 2);
             }
+            /*
+            if (mouseState.RightButton == ButtonState.Pressed && !wasPressed)
+            {
+                wasPressed = true;
+                this.RotateRight();
+            }
+            else if (mouseState.RightButton == ButtonState.Released && wasPressed)
+            {
+                wasPressed = false;
+            }
+            //*/
         }
 
         /*

@@ -115,17 +115,28 @@ namespace CityBuilder
         {
             foreach(Structure structure in _structures)
             {
-                if(structure.Data.Type == Structure.StructureType.House)
+                switch (structure.Data.Type)
                 {
-                    _resources[Resource.ResourceType.Wood] += 0.1f;
-                    _resources[Resource.ResourceType.Metal] += 0.01f;
-                }
-
-
-                if (structure.Data.Type == Structure.StructureType.Warehouse)
-                {
-                    _resources[Resource.ResourceType.Ore] += 0.02f;
-                    _resources[Resource.ResourceType.Stone] += 0.04f;
+                    case Structure.StructureType.House:
+                        {
+                            _resources[Resource.ResourceType.Stone] += 0.04f;
+                            break;
+                        }
+                    case Structure.StructureType.Warehouse:
+                        {
+                            _resources[Resource.ResourceType.Ore] += 0.02f;
+                            _resources[Resource.ResourceType.Metal] += 0.01f;
+                            break;
+                        }
+                    case Structure.StructureType.Lumbermill:
+                        {
+                            _resources[Resource.ResourceType.Wood] += 0.1f;
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
                 }
             }
         }
@@ -185,6 +196,11 @@ namespace CityBuilder
                             break;
                         }
                     case Structure.StructureType.Warehouse:
+                        {
+                            scrollBox.AddCard(type);
+                            break;
+                        }
+                    case Structure.StructureType.Lumbermill:
                         {
                             scrollBox.AddCard(type);
                             break;
