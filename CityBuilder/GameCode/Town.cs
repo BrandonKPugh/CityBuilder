@@ -113,30 +113,68 @@ namespace CityBuilder
 
         private void Calculate()
         {
-            foreach(Structure structure in _structures)
+            // Get maximum resource count
+            Dictionary<Resource.ResourceType, int> resourcesMax;
+            resourcesMax = new Dictionary<Resource.ResourceType, int>();
+            resourcesMax.Add(Resource.ResourceType.Wood, Config.CAPITAL_RESOURCE_ADD_WOOD);
+            resourcesMax.Add(Resource.ResourceType.Stone, Config.CAPITAL_RESOURCE_ADD_STONE);
+            resourcesMax.Add(Resource.ResourceType.Ore, Config.CAPITAL_RESOURCE_ADD_ORE);
+            resourcesMax.Add(Resource.ResourceType.Metal, Config.CAPITAL_RESOURCE_ADD_METAL);
+
+            // Add/Subtract all resources
+            foreach (Structure structure in _structures)
             {
                 switch (structure.Data.Type)
                 {
                     case Structure.StructureType.House:
                         {
-                            _resources[Resource.ResourceType.Stone] += 0.04f;
+                            _resources[Resource.ResourceType.Wood] += 0.01f;
+                            _resources[Resource.ResourceType.Stone] += 0.01f;
+                            _resources[Resource.ResourceType.Ore] += 0.01f;
+                            _resources[Resource.ResourceType.Metal] += 0.01f;
                             break;
                         }
                     case Structure.StructureType.Warehouse:
                         {
-                            _resources[Resource.ResourceType.Ore] += 0.02f;
-                            _resources[Resource.ResourceType.Metal] += 0.01f;
+                            resourcesMax[Resource.ResourceType.Wood] += Config.WAREHOUSE_RESOURCE_ADD_WOOD;
+                            resourcesMax[Resource.ResourceType.Stone] += Config.WAREHOUSE_RESOURCE_ADD_STONE;
+                            resourcesMax[Resource.ResourceType.Ore] += Config.WAREHOUSE_RESOURCE_ADD_ORE;
+                            resourcesMax[Resource.ResourceType.Metal] += Config.WAREHOUSE_RESOURCE_ADD_METAL;
                             break;
                         }
                     case Structure.StructureType.Lumbermill:
                         {
-                            _resources[Resource.ResourceType.Wood] += 0.1f;
+                            _resources[Resource.ResourceType.Wood] += 0.15f;
+                            break;
+                        }
+                    case Structure.StructureType.Capital:
+                        {
+                            break;
+                        }
+                    case Structure.StructureType.Mine:
+                        {
+                            _resources[Resource.ResourceType.Stone] += 0.25f;
+                            _resources[Resource.ResourceType.Ore] += 0.15f;
+                            break;
+                        }
+                    case Structure.StructureType.Forge:
+                        {
+                            _resources[Resource.ResourceType.Ore] -= 0.1f;
+                            _resources[Resource.ResourceType.Metal] += 0.05f;
                             break;
                         }
                     default:
                         {
                             break;
                         }
+                }
+            }
+
+            foreach(Resource.ResourceType type in Enum.GetValues(typeof(Resource.ResourceType)))
+            {
+                if(_resources[type] > resourcesMax[type])
+                {
+                    _resources[type] = resourcesMax[type];
                 }
             }
         }
@@ -201,6 +239,21 @@ namespace CityBuilder
                             break;
                         }
                     case Structure.StructureType.Lumbermill:
+                        {
+                            scrollBox.AddCard(type);
+                            break;
+                        }
+                    case Structure.StructureType.Capital:
+                        {
+                            scrollBox.AddCard(type);
+                            break;
+                        }
+                    case Structure.StructureType.Forge:
+                        {
+                            scrollBox.AddCard(type);
+                            break;
+                        }
+                    case Structure.StructureType.Mine:
                         {
                             scrollBox.AddCard(type);
                             break;

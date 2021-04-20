@@ -291,13 +291,14 @@ namespace CityBuilder.Interface
         public static BUTTON_INFO BUILD_SCROLLBOX_DOWN = new BUTTON_INFO("ButtonDown48x48", null, null, 1152, 728, 48, 48);
         public static Color BUILD_SCROLLBOX_UPDOWN_ACTIVE_COLOR = Color.White;
         public static Color BUILD_SCROLLBOX_UPDOWN_INACTIVE_COLOR = Color.Gray;
+        public static Color BUILD_SCROLLBOX_UPDOWN_HOVER_COLOR = new Color(50, 50, 255, 150);
         public static UIBOX_INFO BUILD_SCROLLBOX_SLIDER = new UIBOX_INFO("Slider48x24", 1152, 450, 48, 24, Color.White);
         public static UIBOX_INFO BUILD_SCROLLBOX = new UIBOX_INFO("ScrollBox384x384", 820, 396, 384, 384, Color.White);
         public static int BUILD_SCROLLBOX_SLIDER_RANGE = BUILD_SCROLLBOX_DOWN.Y - BUILD_SCROLLBOX_SLIDER.Y - BUILD_SCROLLBOX_SLIDER.Height - 2;
 
         public static Color STRUCTURE_CARD_PLACEABLE = Color.White;
         public static Color STRUCTURE_CARD_NOT_PLACEABLE = new Color(255, 50, 50, 150);
-        public static Color STRUCTURE_CARD_HOVER_COLOR = new Color(50, 50, 255, 150);
+        public static Color STRUCTURE_CARD_HOVER_COLOR = BUILD_SCROLLBOX_UPDOWN_HOVER_COLOR;
 
 
         public static Vector2 STRUCTURE_CARD_SIZE = new Vector2(326, 188);

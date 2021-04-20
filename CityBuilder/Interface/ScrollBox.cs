@@ -45,10 +45,12 @@ namespace CityBuilder.Interface
 
             Button scrollBoxUpArrow = new Button(content, ControlConstants.BUILD_SCROLLBOX_UP);
             scrollBoxUpArrow.Click += ScrollBoxUpArrow_Click;
+            scrollBoxUpArrow.HoverColour = ControlConstants.BUILD_SCROLLBOX_UPDOWN_HOVER_COLOR;
             this.Add(scrollBoxUpArrow);
             buttonUp = scrollBoxUpArrow;
             Button scrollBoxDownArrow = new Button(content, ControlConstants.BUILD_SCROLLBOX_DOWN);
             scrollBoxDownArrow.Click += ScrollBoxDownArrow_Click;
+            scrollBoxDownArrow.HoverColour = ControlConstants.BUILD_SCROLLBOX_UPDOWN_HOVER_COLOR;
             this.Add(scrollBoxDownArrow);
             buttonDown = scrollBoxDownArrow;
             UIBox scrollBoxSlider = new UIBox(content, ControlConstants.BUILD_SCROLLBOX_SLIDER);

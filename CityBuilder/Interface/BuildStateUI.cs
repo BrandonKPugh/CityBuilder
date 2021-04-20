@@ -54,7 +54,10 @@ namespace CityBuilder.Interface
                     if (value > Config.MAX_RESOURCE_VALUE)
                         value = Config.MAX_RESOURCE_VALUE;
                     if (!resourcesCounts.ContainsKey(type))
+                    {
                         resourcesCounts.Add(type, value);
+                        _resourceTextBoxes[type].Text = value.ToString();
+                    }
                     if (resourcesCounts[type] != value)
                     {
                         resourcesCounts[type] = value;

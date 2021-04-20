@@ -17,6 +17,9 @@ namespace CityBuilder
             House,
             Warehouse,
             Lumbermill,
+            Capital,
+            Forge,
+            Mine,
             Other
         }
 
@@ -132,22 +135,39 @@ namespace CityBuilder
             {
                 case StructureType.House:
                     {
-                        cost.Add(Resource.ResourceType.Wood, 100);
-                        cost.Add(Resource.ResourceType.Stone, 25);
-                        cost.Add(Resource.ResourceType.Ore, 10);
+                        cost.Add(Resource.ResourceType.Wood, 50);
+                        cost.Add(Resource.ResourceType.Stone, 20);
                         cost.Add(Resource.ResourceType.Metal, 5);
                         break;
                     }
                 case StructureType.Warehouse:
                     {
-                        cost.Add(Resource.ResourceType.Wood, 400);
-                        cost.Add(Resource.ResourceType.Stone, 150);
+                        cost.Add(Resource.ResourceType.Wood, 200);
+                        cost.Add(Resource.ResourceType.Stone, 100);
                         break;
                     }
                 case StructureType.Lumbermill:
                     {
-                        cost.Add(Resource.ResourceType.Stone, 200);
-                        cost.Add(Resource.ResourceType.Ore, 10);
+                        cost.Add(Resource.ResourceType.Wood, 150);
+                        cost.Add(Resource.ResourceType.Stone, 50);
+                        cost.Add(Resource.ResourceType.Metal, 10);
+                        break;
+                    }
+                case StructureType.Capital:
+                    {
+                        cost.Add(Resource.ResourceType.Wood, 500);
+                        cost.Add(Resource.ResourceType.Stone, 500);
+                        cost.Add(Resource.ResourceType.Metal, 250);
+                        break;
+                    }
+                case StructureType.Forge:
+                    {
+                        cost.Add(Resource.ResourceType.Stone, 300);
+                        break;
+                    }
+                case StructureType.Mine:
+                    {
+                        cost.Add(Resource.ResourceType.Wood, 500);
                         break;
                     }
                 default:
@@ -183,11 +203,23 @@ namespace CityBuilder
                     }
                 case StructureType.Warehouse:
                     {
-                        return new StructureSize(2, 2);
+                        return new StructureSize(4, 2);
                     }
                 case StructureType.Lumbermill:
                     {
-                        return new StructureSize(4, 2);
+                        return new StructureSize(2, 2);
+                    }
+                case StructureType.Capital:
+                    {
+                        return new StructureSize(4, 3);
+                    }
+                case StructureType.Forge:
+                    {
+                        return new StructureSize(2, 2);
+                    }
+                case StructureType.Mine:
+                    {
+                        return new StructureSize(4, 4);
                     }
                 default:
                     {
@@ -227,7 +259,6 @@ namespace CityBuilder
                 }
             }
             this.Sprite.Draw(spriteBatch, Collision.Region(), rotation);
-
         }
     }
 }

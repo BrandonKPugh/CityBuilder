@@ -135,6 +135,7 @@ namespace CityBuilder
 
             List<Structure.StructureData> structureDataList = new List<Structure.StructureData>();
 
+            /*
             structureDataList.Add(new Structure.StructureData(3, 2, 1, 2));
             structureDataList.Add(new Structure.StructureData(1, 1, 5, 2));
             structureDataList.Add(new Structure.StructureData(1, 1, 5, 3));
@@ -145,6 +146,7 @@ namespace CityBuilder
             structureDataList.Add(new Structure.StructureData(1, 1, 4, 6));
             structureDataList.Add(new Structure.StructureData(2, 1, 3, 7));
             structureDataList.Add(new Structure.StructureData(3, 4, 8, 6));
+            //*/
 
             foreach (Structure.StructureData data in structureDataList)
             {

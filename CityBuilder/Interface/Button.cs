@@ -100,7 +100,7 @@ namespace CityBuilder.Interface
         }
 
         public override void Update(GameTime gameTime)
-        {
+        { 
             if (IsActive)
             {
                 _previousMouse = _currentMouse;

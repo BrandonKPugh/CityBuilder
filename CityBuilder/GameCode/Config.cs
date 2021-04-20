@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CityBuilder.GameCode;
 using Microsoft.Xna.Framework;
 
 namespace CityBuilder
@@ -56,14 +57,24 @@ namespace CityBuilder
 
         // GRID_INFO(tilesWide, tilesHigh, x, y, width, height);
         //public static GRID_INFO BUILD_GRID = new GRID_INFO(20, 20, 0.1f, .1f, 0.4f, .8f);
-        public static GRID_INFO BUILD_GRID = new GRID_INFO(12, 12, 20, 20, 760, 760);
+        public static GRID_INFO BUILD_GRID = new GRID_INFO(16, 16, 20, 20, 760, 760);
 
         public static Color GRID_COLOR = new Color(30, 30, 30);
 
         public static int MAX_RESOURCE_VALUE = 99999999;
-        public static int INITIAL_RESOURCE_VALUE_WOOD = 5000;
-        public static int INITIAL_RESOURCE_VALUE_STONE = 2000;
-        public static int INITIAL_RESOURCE_VALUE_ORE = 500;
-        public static int INITIAL_RESOURCE_VALUE_METAL = 200;
+        public static int INITIAL_RESOURCE_VALUE_WOOD = 500;
+        public static int INITIAL_RESOURCE_VALUE_STONE = 200;
+        public static int INITIAL_RESOURCE_VALUE_ORE = 50;
+        public static int INITIAL_RESOURCE_VALUE_METAL = 20;
+
+        public static int CAPITAL_RESOURCE_ADD_WOOD = 400;
+        public static int CAPITAL_RESOURCE_ADD_STONE = 200;
+        public static int CAPITAL_RESOURCE_ADD_ORE = 50;
+        public static int CAPITAL_RESOURCE_ADD_METAL = 25;
+
+        public static int WAREHOUSE_RESOURCE_ADD_WOOD = 150;
+        public static int WAREHOUSE_RESOURCE_ADD_STONE = 100;
+        public static int WAREHOUSE_RESOURCE_ADD_ORE = 50;
+        public static int WAREHOUSE_RESOURCE_ADD_METAL = 50;
     }
 }
