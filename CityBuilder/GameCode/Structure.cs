@@ -17,7 +17,7 @@ namespace CityBuilder
             House,
             Warehouse,
             Lumbermill,
-            Capital,
+            Capitol,
             Forge,
             Mine,
             Other
@@ -153,7 +153,7 @@ namespace CityBuilder
                         cost.Add(Resource.ResourceType.Metal, 10);
                         break;
                     }
-                case StructureType.Capital:
+                case StructureType.Capitol:
                     {
                         cost.Add(Resource.ResourceType.Wood, 500);
                         cost.Add(Resource.ResourceType.Stone, 500);
@@ -209,7 +209,7 @@ namespace CityBuilder
                     {
                         return new StructureSize(2, 2);
                     }
-                case StructureType.Capital:
+                case StructureType.Capitol:
                     {
                         return new StructureSize(4, 3);
                     }

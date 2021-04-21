@@ -116,10 +116,10 @@ namespace CityBuilder
             // Get maximum resource count
             Dictionary<Resource.ResourceType, int> resourcesMax;
             resourcesMax = new Dictionary<Resource.ResourceType, int>();
-            resourcesMax.Add(Resource.ResourceType.Wood, Config.CAPITAL_RESOURCE_ADD_WOOD);
-            resourcesMax.Add(Resource.ResourceType.Stone, Config.CAPITAL_RESOURCE_ADD_STONE);
-            resourcesMax.Add(Resource.ResourceType.Ore, Config.CAPITAL_RESOURCE_ADD_ORE);
-            resourcesMax.Add(Resource.ResourceType.Metal, Config.CAPITAL_RESOURCE_ADD_METAL);
+            resourcesMax.Add(Resource.ResourceType.Wood, Config.CAPITOL_RESOURCE_ADD_WOOD);
+            resourcesMax.Add(Resource.ResourceType.Stone, Config.CAPITOL_RESOURCE_ADD_STONE);
+            resourcesMax.Add(Resource.ResourceType.Ore, Config.CAPITOL_RESOURCE_ADD_ORE);
+            resourcesMax.Add(Resource.ResourceType.Metal, Config.CAPITOL_RESOURCE_ADD_METAL);
 
             // Add/Subtract all resources
             foreach (Structure structure in _structures)
@@ -147,7 +147,7 @@ namespace CityBuilder
                             _resources[Resource.ResourceType.Wood] += 0.15f;
                             break;
                         }
-                    case Structure.StructureType.Capital:
+                    case Structure.StructureType.Capitol:
                         {
                             break;
                         }
@@ -190,7 +190,50 @@ namespace CityBuilder
 
         public void LoadStructureContent(Structure structure, bool isGhost = false)
         {
-            Sprite newSprite = _spriteSheet.GetSprite("structure-" + structure.Data.Width + 'x' + structure.Data.Height);
+            Sprite newSprite;
+            switch (structure.Data.Type)
+            {
+                case Structure.StructureType.Capitol:
+                    {
+                        newSprite = _spriteSheet.GetSprite(Config.STRUCTURE_TEXTURE_CAPITOL);
+                        break;
+                    }
+                case Structure.StructureType.House:
+                    {
+                        newSprite = _spriteSheet.GetSprite(Config.STRUCTURE_TEXTURE_HOUSE);
+                        break;
+                    }
+                case Structure.StructureType.Forge:
+                    {
+                        newSprite = _spriteSheet.GetSprite(Config.STRUCTURE_TEXTURE_FORGE);
+                        break;
+                    }
+                case Structure.StructureType.Lumbermill:
+                    {
+                        newSprite = _spriteSheet.GetSprite(Config.STRUCTURE_TEXTURE_LUMBERMILL);
+                        break;
+                    }
+                case Structure.StructureType.Warehouse:
+                    {
+                        newSprite = _spriteSheet.GetSprite(Config.STRUCTURE_TEXTURE_WAREHOUSE);
+                        break;
+                    }
+                case Structure.StructureType.Mine:
+                    {
+                        newSprite = _spriteSheet.GetSprite(Config.STRUCTURE_TEXTURE_MINE);
+                        break;
+                    }
+                case Structure.StructureType.Other:
+                    {
+                        newSprite = _spriteSheet.GetSprite("structure-" + structure.Data.Width + 'x' + structure.Data.Height);
+                        break;
+                    }
+                default:
+                    {
+                        throw new Exception("Structure does not have a valid structure type");
+                    }
+            }
+            //Sprite newSprite = _spriteSheet.GetSprite("structure-" + structure.Data.Width + 'x' + structure.Data.Height);
             if(isGhost)
             {
                 Sprite ghostCopy = newSprite.Copy();
@@ -243,7 +286,7 @@ namespace CityBuilder
                             scrollBox.AddCard(type);
                             break;
                         }
-                    case Structure.StructureType.Capital:
+                    case Structure.StructureType.Capitol:
                         {
                             scrollBox.AddCard(type);
                             break;
