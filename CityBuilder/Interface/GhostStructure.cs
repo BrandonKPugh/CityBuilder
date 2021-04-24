@@ -44,6 +44,10 @@ namespace CityBuilder.Interface
                         this.Data.X1 = tileX;
                         this.Data.Y1 = tileY;
                         _town.FinalizeStructurePlacement(this.ToStructure(), tileX, tileY);
+                        if(_town.CanCreateStructure(this))
+                        {
+                            _town.BeginStructurePlacement(this.Data.Type);
+                        }
                     }
                 }
             }

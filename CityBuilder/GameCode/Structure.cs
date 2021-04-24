@@ -20,6 +20,7 @@ namespace CityBuilder
             Capitol,
             Forge,
             Mine,
+            Road,
             Other
         }
 
@@ -52,6 +53,7 @@ namespace CityBuilder
                 this.Cost = new Dictionary<Resource.ResourceType, int>();
                 this.Type = type;
                 this.Rotation = Rotation.Normal;
+                IsRoad = false;
             }
             public StructureData(StructureSize size, int x1, int y1, StructureType type = StructureType.Other)
             {
@@ -61,6 +63,7 @@ namespace CityBuilder
                 this.Cost = new Dictionary<Resource.ResourceType, int>();
                 this.Type = type;
                 this.Rotation = Rotation.Normal;
+                IsRoad = false;
             }
             public StructureSize Size;
             public StructureType Type;
@@ -72,6 +75,7 @@ namespace CityBuilder
             public int Height { get { return Size.Height; } }
             public int Width { get { return Size.Width; } }
             public Dictionary<Resource.ResourceType, int> Cost;
+            public bool IsRoad;
         }
 
         public Structure(CollisionBody collision, StructureData data) : base(collision)
@@ -220,6 +224,10 @@ namespace CityBuilder
                 case StructureType.Mine:
                     {
                         return new StructureSize(4, 4);
+                    }
+                case StructureType.Road:
+                    {
+                        return new StructureSize(1, 1);
                     }
                 default:
                     {

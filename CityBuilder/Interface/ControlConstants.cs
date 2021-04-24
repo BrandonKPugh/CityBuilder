@@ -318,11 +318,24 @@ namespace CityBuilder.Interface
         public static Color STRUCTURE_CARD_RESOURCE_LABEL_COLOR = Color.Black;
         public static Color STRUCTURE_CARD_RESOURCE_COUNT_COLOR = Color.Black;
 
-        public static BUTTON_INFO CANCEL_BUTTON_INFO = new BUTTON_INFO("Cancel", "DebugFont", "", 820 + 384 + 4, 396 + 384 - 48, 48, 48);
+        public static BUTTON_INFO CANCEL_BUTTON_INFO = new BUTTON_INFO("Cancel", "DebugFont", "", 820 + 384 + 4, 396 + 384 -96 - 48 - 4, 48, 48);
         public static Color CANCEL_BUTTON_COLOR = new Color(155, 0, 0, 255);
         public static Color CANCEL_BUTTON_HOVER_COLOR = new Color(255, 20, 20, 255);
 
         public static Color GHOST_STRUCTURE_COLOR = new Color(150, 150, 150, 100);
+
+        public static BUTTON_INFO REMOVE_STRUCTURE_BUTTON_INFO = new BUTTON_INFO("shovel", "DebugFont", "", 820 + 384 + 4, 396 + 384 - 96, 96, 96);
+        public static Color REMOVE_STRUCTURE_BUTTON_COLOR = new Color(155, 0, 0, 255);
+        public static Color REMOVE_STRUCTURE_BUTTON_HOVER_COLOR = new Color(255, 20, 20, 255);
+
+        public static Color SELECTED_STRUCTURE_COLOR = new Color(255, 255, 0, 100);
+
+        public static string ROAD_TEXTURE_ZERO_CONNECTIONS = "road-square";
+        public static string ROAD_TEXTURE_ONE_CONNECTION = "road-u";
+        public static string ROAD_TEXTURE_TWO_CONNECTIONS_OPPOSITE = "road-straight";
+        public static string ROAD_TEXTURE_TWO_CONNECTIONS_ADJACENT = "road-corner";
+        public static string ROAD_TEXTURE_THREE_CONNECTIONS = "road-t";
+        public static string ROAD_TEXTURE_FOUR_CONNECTIONS = "road-4-way";
 
 
         #endregion

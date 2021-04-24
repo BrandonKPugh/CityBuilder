@@ -59,7 +59,7 @@ namespace CityBuilder
         /// <param name="rotation"></param>
         public void Draw(SpriteBatch spriteBatch, Rectangle destination, float rotation = 0.0f)
         {
-
+            /*
             List<Rectangle> sources = sourceRects[0];
 
             for (int y = 0; y < rows; y++)
@@ -69,14 +69,14 @@ namespace CityBuilder
                     Rectangle source = sources[y * columns + x];
                     Rectangle region = destination;
                     Rectangle dest = new Rectangle(region.X + ((region.Width / columns) * x), region.Y + ((region.Height / rows) * y), region.Width / columns, region.Height / rows);
-                    spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, 0f, new Vector2(0), flip, Depth);
+                    spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, rotation, new Vector2(0), flip, Depth);
                 }
             }
-
+            */
             /*
              * This code was intended to be for structure rotation, but I've since decided not to
              * implement this functionality. This code is only partially complete.
-             * 
+             */ 
             List<Rectangle> sources = sourceRects[0];
 
             //float aDir = (destination.Width / columns);

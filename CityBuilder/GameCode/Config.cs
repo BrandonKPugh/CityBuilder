@@ -57,20 +57,20 @@ namespace CityBuilder
 
         // GRID_INFO(tilesWide, tilesHigh, x, y, width, height);
         //public static GRID_INFO BUILD_GRID = new GRID_INFO(20, 20, 0.1f, .1f, 0.4f, .8f);
-        public static GRID_INFO BUILD_GRID = new GRID_INFO(32, 32, 20, 20, 760, 760);
+        public static GRID_INFO BUILD_GRID = new GRID_INFO(20, 20, 20, 20, 760, 760);
 
         public static Color GRID_COLOR = new Color(30, 30, 30);
 
-        public static int MAX_RESOURCE_VALUE = 99999999;
-        public static int INITIAL_RESOURCE_VALUE_WOOD = 500;
-        public static int INITIAL_RESOURCE_VALUE_STONE = 200;
-        public static int INITIAL_RESOURCE_VALUE_ORE = 50;
-        public static int INITIAL_RESOURCE_VALUE_METAL = 20;
+        public static int MAX_RESOURCE_VALUE_LABEL = 99999999;
+        public static int INITIAL_RESOURCE_VALUE_WOOD = 50000;
+        public static int INITIAL_RESOURCE_VALUE_STONE = 20000;
+        public static int INITIAL_RESOURCE_VALUE_ORE = 5000;
+        public static int INITIAL_RESOURCE_VALUE_METAL = 2000;
 
-        public static int CAPITOL_RESOURCE_ADD_WOOD = 400;
-        public static int CAPITOL_RESOURCE_ADD_STONE = 200;
-        public static int CAPITOL_RESOURCE_ADD_ORE = 50;
-        public static int CAPITOL_RESOURCE_ADD_METAL = 25;
+        public static int CAPITOL_RESOURCE_ADD_WOOD = 40000;
+        public static int CAPITOL_RESOURCE_ADD_STONE = 20000;
+        public static int CAPITOL_RESOURCE_ADD_ORE = 5000;
+        public static int CAPITOL_RESOURCE_ADD_METAL = 2500;
 
         public static int WAREHOUSE_RESOURCE_ADD_WOOD = 150;
         public static int WAREHOUSE_RESOURCE_ADD_STONE = 100;
@@ -83,5 +83,6 @@ namespace CityBuilder
         public static string STRUCTURE_TEXTURE_LUMBERMILL = "lumbermill";
         public static string STRUCTURE_TEXTURE_MINE = "mine";
         public static string STRUCTURE_TEXTURE_WAREHOUSE = "warehouse";
+        public static string STRUCTURE_TEXTURE_ROAD = "road-4-way";
     }
 }

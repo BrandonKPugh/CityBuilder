@@ -53,7 +53,7 @@ namespace CityBuilder
 
             Data.Grid.Draw(SpriteBatch);
 
-            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp);
 
             Data.Town.Draw(SpriteBatch);
             _ui.Draw(gameTime, SpriteBatch);
@@ -120,6 +120,12 @@ namespace CityBuilder
             cancelButton.HoverColour = ControlConstants.CANCEL_BUTTON_HOVER_COLOR;
             cancelButton.Click += Data.Town.CancelPlacementButton_Click;
             newBuildStateUI.Add(cancelButton);
+
+            Button removeStructure = new Button(Content, ControlConstants.REMOVE_STRUCTURE_BUTTON_INFO);
+            removeStructure.BackColour = ControlConstants.REMOVE_STRUCTURE_BUTTON_COLOR;
+            removeStructure.HoverColour = ControlConstants.REMOVE_STRUCTURE_BUTTON_HOVER_COLOR;
+            removeStructure.Click += Data.Town.RemoveStructureButton_Click;
+            newBuildStateUI.Add(removeStructure);
 
 
             #endregion

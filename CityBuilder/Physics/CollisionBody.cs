@@ -44,8 +44,8 @@ namespace CityBuilder
                 RectangleBody a = (RectangleBody)this;
                 RectangleBody b = (RectangleBody)other;
 
-                return (a.Position.X <= b.Position.X + b.Size.X || a.Position.X + a.Size.X >= b.Position.X) &&
-                    (a.Position.Y <= b.Position.Y + b.Size.Y || a.Position.Y + a.Size.Y >= b.Position.Y);
+                return (a.Position.X <= b.Position.X + b.Size.X && a.Position.X + a.Size.X >= b.Position.X) &&
+                    (a.Position.Y <= b.Position.Y + b.Size.Y && a.Position.Y + a.Size.Y >= b.Position.Y);
             }
             else
             {

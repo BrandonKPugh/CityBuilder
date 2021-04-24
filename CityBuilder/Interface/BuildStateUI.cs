@@ -26,8 +26,8 @@ namespace CityBuilder.Interface
         {
             if (_resourceTextBoxes.ContainsKey(type))
             {
-                if (value > Config.MAX_RESOURCE_VALUE)
-                    value = Config.MAX_RESOURCE_VALUE;
+                if (value > Config.MAX_RESOURCE_VALUE_LABEL)
+                    value = Config.MAX_RESOURCE_VALUE_LABEL;
                 _resourceTextBoxes[type].SetText(value.ToString());
                 if (!resourcesCounts.ContainsKey(type))
                     resourcesCounts.Add(type, value);
@@ -51,8 +51,8 @@ namespace CityBuilder.Interface
                 if (_resourceTextBoxes.ContainsKey(type))
                 {
                     int value = (int)resources[type];
-                    if (value > Config.MAX_RESOURCE_VALUE)
-                        value = Config.MAX_RESOURCE_VALUE;
+                    if (value > Config.MAX_RESOURCE_VALUE_LABEL)
+                        value = Config.MAX_RESOURCE_VALUE_LABEL;
                     if (!resourcesCounts.ContainsKey(type))
                     {
                         resourcesCounts.Add(type, value);
