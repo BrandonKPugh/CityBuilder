@@ -169,7 +169,7 @@ namespace CityBuilder
                 }
                 else
                 {
-                    throw new Exception("Player clicked but no tile found!");
+                    //throw new Exception("Player clicked but no tile found!");
                 }
 
             }
@@ -476,7 +476,7 @@ namespace CityBuilder
                     }
 
                     // Right side
-                    if (x != _grid.Info.TilesWide)
+                    if (x < _grid.Info.TilesWide - 1)
                     {
                         if (IsStructureUnderTile(x + 1, y))
                         {
@@ -487,7 +487,7 @@ namespace CityBuilder
                     }
 
                     // Bottom side
-                    if (y != _grid.Info.TilesHigh)
+                    if (y < _grid.Info.TilesHigh -1)
                     {
                         if (IsStructureUnderTile(x, y + 1))
                         {
@@ -648,6 +648,10 @@ namespace CityBuilder
 
         public int CoordToIndex(int x, int y)
         {
+            if (x >= _grid.Info.TilesWide || y >= _grid.Info.TilesHigh || x < 0 || y < 0)
+            {
+                throw new Exception("Invalid coordinates");
+            }
             return y * _grid.Info.TilesWide + x;
         }
 

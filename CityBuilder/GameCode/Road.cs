@@ -34,7 +34,7 @@ namespace CityBuilder.GameCode
             }
 
             // Right side
-            if (x != _grid.Info.TilesWide)
+            if (x < _grid.Info.TilesWide - 1)
             {
                 if (town.IsStructureUnderTile(x + 1, y))
                 {
@@ -45,7 +45,7 @@ namespace CityBuilder.GameCode
             }
 
             // Bottom side
-            if (y != _grid.Info.TilesHigh)
+            if (y < _grid.Info.TilesHigh - 1)
             {
                 if (town.IsStructureUnderTile(x, y + 1))
                 {
