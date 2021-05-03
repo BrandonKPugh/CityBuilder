@@ -59,56 +59,60 @@ namespace CityBuilder
         /// <param name="rotation"></param>
         public void Draw(SpriteBatch spriteBatch, Rectangle destination, float rotation = 0.0f)
         {
-            /*
-            List<Rectangle> sources = sourceRects[0];
-
-            for (int y = 0; y < rows; y++)
+            if (rotation == 0.0f)
             {
-                for (int x = 0; x < columns; x++)
+                List<Rectangle> sources = sourceRects[0];
+
+                for (int y = 0; y < rows; y++)
                 {
-                    Rectangle source = sources[y * columns + x];
-                    Rectangle region = destination;
-                    Rectangle dest = new Rectangle(region.X + ((region.Width / columns) * x), region.Y + ((region.Height / rows) * y), region.Width / columns, region.Height / rows);
-                    spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, rotation, new Vector2(0), flip, Depth);
+                    for (int x = 0; x < columns; x++)
+                    {
+                        Rectangle source = sources[y * columns + x];
+                        Rectangle region = destination;
+                        Rectangle dest = new Rectangle(region.X + ((region.Width / columns) * x), region.Y + ((region.Height / rows) * y), region.Width / columns, region.Height / rows);
+                        spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, rotation, new Vector2(0), flip, Depth);
+                    }
                 }
             }
-            */
             /*
              * This code was intended to be for structure rotation, but I've since decided not to
              * implement this functionality. This code is only partially complete.
-             */ 
-            List<Rectangle> sources = sourceRects[0];
-
-            //float aDir = (destination.Width / columns);
-            //float bDir = (destination.Height / rows);
-
-            float width = destination.Width / columns;
-            float height = destination.Height / rows;
-            float diag = (float)Math.Sqrt(Math.Pow(width / 2f, 2f) + Math.Pow(height / 2f, 2f));
-
-            float cos = (float)(Math.Cos(rotation) * width);
-            float sin = (float)(Math.Sin(rotation) * height);
-
-            float diagCos = (float)Math.Round(Math.Cos(7 * Math.PI / 4 - rotation) * diag, 1);
-            float diagSin = (float)Math.Round(Math.Sin(7 * Math.PI / 4 - rotation) * diag, 1);
-
-            Vector2 aVec = new Vector2(cos, sin);
-            Vector2 bVec = new Vector2(sin, cos);
-
-            for (int b = 0; b < rows; b++)
+             */
+            else
             {
-                for (int a = 0; a < columns; a++)
+                List<Rectangle> sources = sourceRects[0];
+
+                //float aDir = (destination.Width / columns);
+                //float bDir = (destination.Height / rows);
+
+                float width = destination.Width / columns;
+                float height = destination.Height / rows;
+                float diag = (float)Math.Sqrt(Math.Pow(width / 2f, 2f) + Math.Pow(height / 2f, 2f));
+
+                float cos = (float)(Math.Cos(rotation) * width);
+                float sin = (float)(Math.Sin(rotation) * height);
+
+                float diagCos = (float)Math.Round(Math.Cos(7 * Math.PI / 4 - rotation) * diag, 1);
+                float diagSin = (float)Math.Round(Math.Sin(7 * Math.PI / 4 - rotation) * diag, 1);
+
+                Vector2 aVec = new Vector2(cos, sin);
+                Vector2 bVec = new Vector2(sin, cos);
+
+                for (int b = 0; b < rows; b++)
                 {
-                    Rectangle source = sources[b * columns + a];
-                    float translateX = (float)Math.Round((diagCos * -1) + (width / 2), 0);
-                    float translateY = (float)Math.Round((diagSin) + (height / 2), 0);
-                    if(translateX != 0 || translateY != 0)
+                    for (int a = 0; a < columns; a++)
                     {
+                        Rectangle source = sources[b * columns + a];
+                        float translateX = (float)Math.Round((diagCos * -1) + (width / 2), 0);
+                        float translateY = (float)Math.Round((diagSin) + (height / 2), 0);
+                        if (translateX != 0 || translateY != 0)
+                        {
 
+                        }
+                        Rectangle dest = new Rectangle((int)(destination.X + (aVec.X * a) + (bVec.X * b) + translateX + 0.5f), (int)(destination.Y + (aVec.Y * a) + (bVec.Y * b) + translateY + 0.5f), (int)width, (int)height);
+
+                        spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, rotation, new Vector2(0), flip, Depth);
                     }
-                    Rectangle dest = new Rectangle((int)(destination.X + (aVec.X * a) + (bVec.X * b) + translateX + 0.5f), (int)(destination.Y + (aVec.Y * a) + (bVec.Y * b) + translateY + 0.5f), (int)width, (int)height);
-
-                    spriteBatch.Draw(spriteSheet.sheetTexture, dest, source, TextureColor, rotation, new Vector2(0), flip, Depth);
                 }
             }
             //*/
