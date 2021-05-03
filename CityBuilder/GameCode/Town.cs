@@ -134,6 +134,15 @@ namespace CityBuilder
             }
             if (_ghostStructure != null)
                 _ghostStructure.Update(gameTime);
+
+            if(_selectedStructure != null)
+            {
+                KeyboardState keyboardState = Keyboard.GetState();
+                if(keyboardState.IsKeyDown(Keys.Delete))
+                {
+                    RemoveStructure(_selectedStructure);
+                }
+            }
             
             if(SetResourceLabel == null)
             {
@@ -642,6 +651,56 @@ namespace CityBuilder
                         _structures.Remove(CoordToIndex(x, y));
                     }
                 }
+                if (structure.Data.Type == Structure.StructureType.Road)
+                {
+                    ((Road)structure).RecalculateTexture(this);
+
+                    int x = structure.Data.X1;
+                    int y = structure.Data.Y1;
+                    // Top side
+                    if (y != 0)
+                    {
+                        if (IsStructureUnderTile(x, y - 1))
+                        {
+                            Structure found = GetStructureUnderTile(x, y - 1);
+                            if (found.Data.IsRoad)
+                                ((Road)found).RecalculateTexture(this);
+                        }
+                    }
+
+                    // Right side
+                    if (x < _grid.Info.TilesWide - 1)
+                    {
+                        if (IsStructureUnderTile(x + 1, y))
+                        {
+                            Structure found = GetStructureUnderTile(x + 1, y);
+                            if (found.Data.IsRoad)
+                                ((Road)found).RecalculateTexture(this);
+                        }
+                    }
+
+                    // Bottom side
+                    if (y < _grid.Info.TilesHigh - 1)
+                    {
+                        if (IsStructureUnderTile(x, y + 1))
+                        {
+                            Structure found = GetStructureUnderTile(x, y + 1);
+                            if (found.Data.IsRoad)
+                                ((Road)found).RecalculateTexture(this);
+                        }
+                    }
+
+                    // Left side
+                    if (x != 0)
+                    {
+                        if (IsStructureUnderTile(x - 1, y))
+                        {
+                            Structure found = GetStructureUnderTile(x - 1, y);
+                            if (found.Data.IsRoad)
+                                ((Road)found).RecalculateTexture(this);
+                        }
+                    }
+                }
             }
             _selectedStructure = null;
         }
@@ -650,7 +709,8 @@ namespace CityBuilder
         {
             if (x >= _grid.Info.TilesWide || y >= _grid.Info.TilesHigh || x < 0 || y < 0)
             {
-                throw new Exception("Invalid coordinates");
+                //throw new Exception("Invalid coordinates");
+                return 0;
             }
             return y * _grid.Info.TilesWide + x;
         }
