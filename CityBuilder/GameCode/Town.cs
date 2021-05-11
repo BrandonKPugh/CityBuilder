@@ -252,7 +252,7 @@ namespace CityBuilder
                             }
                         case Structure.StructureType.Lumbermill:
                             {
-                                _resources[Resource.ResourceType.Wood] += 0.15f;
+                                _resources[Resource.ResourceType.Wood] += 0.04f;
                                 break;
                             }
                         case Structure.StructureType.Capitol:
@@ -261,16 +261,16 @@ namespace CityBuilder
                             }
                         case Structure.StructureType.Mine:
                             {
-                                _resources[Resource.ResourceType.Stone] += 0.25f;
-                                _resources[Resource.ResourceType.Ore] += 0.15f;
+                                _resources[Resource.ResourceType.Stone] += 0.04f;
+                                _resources[Resource.ResourceType.Ore] += 0.02f;
                                 break;
                             }
                         case Structure.StructureType.Forge:
                             {
                                 if (_resources[Resource.ResourceType.Ore] > 0.1f && _resources[Resource.ResourceType.Metal] < (resourcesMax[Resource.ResourceType.Metal]))
                                 {
-                                    _resources[Resource.ResourceType.Ore] -= 0.1f;
-                                    _resources[Resource.ResourceType.Metal] += 0.05f;
+                                    _resources[Resource.ResourceType.Ore] -= 0.02f;
+                                    _resources[Resource.ResourceType.Metal] += 0.01f;
                                 }
                                 break;
                             }
