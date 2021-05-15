@@ -242,8 +242,8 @@ namespace CityBuilder
                             {
                                 _resources[Resource.ResourceType.Wood] += 0.01f;
                                 _resources[Resource.ResourceType.Stone] += 0.01f;
-                                _resources[Resource.ResourceType.Ore] += 0.01f;
-                                _resources[Resource.ResourceType.Metal] += 0.01f;
+                                _resources[Resource.ResourceType.Ore] += 0.002f;
+                                _resources[Resource.ResourceType.Metal] += 0.002f;
                                 break;
                             }
                         case Structure.StructureType.Warehouse:
@@ -262,7 +262,7 @@ namespace CityBuilder
                         case Structure.StructureType.Mine:
                             {
                                 _resources[Resource.ResourceType.Stone] += 0.04f;
-                                _resources[Resource.ResourceType.Ore] += 0.02f;
+                                _resources[Resource.ResourceType.Ore] += 0.01f;
                                 break;
                             }
                         case Structure.StructureType.Forge:
